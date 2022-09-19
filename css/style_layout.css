@@ -1,0 +1,559 @@
+* {
+    box-sizing: border-box;
+    list-style: none;
+}
+
+.header.open {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: #fff;
+    animation: login ease 0.3s;
+    box-shadow: -3px 14px 10px -14px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: -3px 14px 10px -14px rgba(0, 0, 0, 0.5);
+}
+
+.over {
+    display: none;
+    animation: navtop linear 0.3s;
+}
+
+.nav_mobile_check:checked~.over {
+    display: block;
+}
+
+.nav_mobile_check:checked~.nav_mobile1 {
+    transform: translateX(0);
+    transition: transform linear 0.3s;
+}
+
+@keyframes navtop {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.product {
+    position: relative;
+}
+
+.product_box {
+    content: 'chưa có sản phẩm trong giỏ hàng';
+    position: absolute;
+    color: #333;
+    width: 264px;
+    height: 125px;
+    border-radius: 10px;
+    right: 0px;
+    top: 45px;
+    font-size: 20px;
+    padding: 10px;
+    background-color: #fff;
+    color: rgb(185, 195, 203);
+    box-shadow: 1px 1px 19px -6px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 19px -6px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: none;
+}
+
+.product_box::before {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    right: 0;
+    top: -20px;
+}
+
+.product_box::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -12px;
+    right: 40px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #fff;
+}
+
+.product:hover .product_box {
+    display: block;
+}
+
+.banner {
+    background-image: url(./../img/banner/banner_1.jpg);
+    height: 600px;
+    background-size: cover;
+    position: relative;
+}
+
+.chevron-left {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 40px;
+    border-color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.3);
+    transform: scale(1);
+    transition: all linear 0.3s;
+}
+
+.chevron-left:hover {
+    transform: scale(1.3);
+}
+
+.chevron-right {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    right: 40px;
+    border-color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.3);
+    transform: scale(1);
+    transition: all linear 0.3s;
+}
+
+.chevron-right:hover {
+    transform: scale(1.3);
+}
+
+.buy_now {
+    border: 5px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: #fff;
+}
+
+.buy_now:hover {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.2)
+}
+
+.product_sofa {
+    transform: scale(1);
+    transition: all linear 0.3s;
+    width: 100%;
+    height: 33vh;
+    background-size: cover;
+}
+
+.product_link {
+    transition: all linear 0.7s;
+    display: none;
+}
+
+.product_item:hover .product_sofa {
+    transform: scale(1.1);
+}
+
+.product_item:hover .product_link {
+    display: block;
+    transform: translateY(0);
+    color: #e2ba48;
+    opacity: 0.7;
+}
+
+.link_sofa:hover {
+    color: #e2ba48;
+}
+
+.section-content {
+    height: 284px;
+    width: 100%;
+    margin-top: 30px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(./../img/a.jpg);
+}
+
+.section_item {
+    width: 30%;
+    text-align: center;
+    margin-top: 70px;
+}
+
+.section_icon {
+    color: #e2ba48;
+    fill: #e2ba48;
+}
+
+.product_tivi {
+    transform: scale(1);
+    transition: all linear 0.3s;
+    width: 100%;
+    height: 40vh;
+    background-size: cover;
+}
+
+.product_item:hover .product_tivi {
+    transform: scale(1.1);
+}
+
+.product_table {
+    transform: scale(1);
+    transition: all linear 0.3s;
+    width: 100%;
+    height: 40vh;
+    background-size: cover;
+}
+
+.product_item:hover .product_table {
+    transform: scale(1.1);
+}
+
+.img-inner {
+    background-size: cover;
+    transform: scale(1);
+    overflow: hidden;
+}
+
+.img-inner_item:hover {
+    transform: scale(1.1);
+    transition: all linear 0.3s;
+}
+
+.img-inner_item {
+    transform: scale(1);
+    transition: all ease 0.3s;
+    width: 100%;
+    height: 100%;
+}
+
+.img-inner2 {
+    background-size: cover;
+    overflow: hidden;
+}
+
+.info_link:hover .info-text {
+    color: #e2ba48;
+}
+
+.info_link:hover .img-inner_item {
+    transform: scale(1.1);
+    transition: all linear 0.3s;
+}
+
+.img-inner-info {
+    background-size: cover;
+    transform: scale(1);
+    height: 38vh;
+    overflow: hidden;
+}
+
+.footer_list {
+    width: 27%;
+    padding-left: 100px;
+    border-right: 1px dashed rgba(0, 0, 0, 0.2);
+    padding-right: 30px;
+}
+
+.footer_list-link {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 7px;
+}
+
+.footer_list-link:hover a {
+    color: #e2ba48;
+}
+
+.info_footer {
+    padding: 0 50px;
+}
+
+.input_info {
+    width: 100%;
+    border: 1px solid;
+    outline: none;
+    padding: 5px 10px;
+}
+
+.button_footer {
+    margin-left: 40%;
+    width: 115px;
+    height: 40px;
+    background-color: #2d2d2d;
+    color: #fff;
+}
+
+.footer {
+    margin-top: 50px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.2);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+    padding-bottom: 50px;
+}
+
+.footer_list-info {
+    border-left: 1px dashed rgba(0, 0, 0, 0.2);
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.modal {
+    margin: 50px 0;
+    display: flex;
+    border: 1px solid;
+    align-items: center;
+    justify-content: center;
+    transition: all linear 0.3s;
+}
+
+.modal_container {
+    width: 875px;
+    height: 371px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: login ease 0.3s;
+}
+
+.modal_header {
+    width: 835px;
+    height: 24px;
+    color: #1c1c1c;
+    font-size: 25px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 24px;
+    margin: 0px 0px 10px;
+    text-align: left;
+    text-transform: uppercase
+}
+
+.modal_close {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 35px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.modal_label {
+    display: block;
+}
+
+.modal_input {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    display: block;
+    outline: none;
+    width: 100%;
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 10px -14px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 10px -14px rgba(0, 0, 0, 0.5);
+}
+
+#login {
+    width: 143px;
+    height: 39px;
+    align-items: flex-start;
+    background-color: #2d2d2d;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: #000000 0px 0px 0px 0px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 15.52px;
+    font-weight: 700;
+    letter-spacing: 0.4656px;
+    line-height: 37.248px;
+    margin: 0px 15.52px 0px 0px;
+    padding: 0px 18.624px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.modal_footer {
+    width: 120px;
+    display: block;
+    margin-top: 20px;
+}
+
+.modal_footer:hover,
+.modal_signup:hover {
+    color: #e2ba48;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal_signup {
+    width: 175px;
+    display: block;
+    margin-top: 20px;
+}
+
+.modal-signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all linear 0.3s;
+    border: 1px solid;
+}
+
+.modal_container-signup {
+    width: 875px;
+    height: 371px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_content-signup {
+    width: 835px;
+    height: 290px;
+}
+
+.modal_header-signup {
+    width: 835px;
+    height: 24px;
+    color: #1c1c1c;
+    font-size: 25px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 24px;
+    margin: 0px 0px 10px;
+    text-align: left;
+    text-transform: uppercase
+}
+
+.modal_close-signup {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 35px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.modal_label-signup {
+    display: block;
+}
+
+.modal_input-signup {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    display: block;
+    outline: none;
+    width: 100%;
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 10px -14px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 10px -14px rgba(0, 0, 0, 0.5);
+}
+
+#signup {
+    width: 143px;
+    height: 39px;
+    align-items: flex-start;
+    background-color: #2d2d2d;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: #000000 0px 0px 0px 0px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 15.52px;
+    font-weight: 700;
+    letter-spacing: 0.4656px;
+    line-height: 37.248px;
+    margin: 0px 15.52px 0px 0px;
+    padding: 0px 18.624px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.modal_footer-signup {
+    width: 120px;
+    display: block;
+    margin-top: 20px;
+}
+
+.modal_signup {
+    width: 175px;
+    display: block;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.notification {
+    color: red;
+}
+
+@media (max-width: 740px) {
+    .banner {
+        height: 330px;
+        background-size: cover;
+    }
+    .chevron-right {
+        width: 30px;
+        height: 30px;
+    }
+    .chevron-left {
+        width: 30px;
+        height: 30px;
+    }
+    .product_sofa {
+        height: 147px;
+    }
+    .product_tivi {
+        height: 21vh;
+    }
+    .product_table {
+        height: 20vh;
+    }
+    .section-content {
+        height: 70vh;
+    }
+    .section-content1 {
+        display: block;
+    }
+    .section_item {
+        width: auto;
+        margin-top: 16px;
+        padding-top: 43px;
+    }
+    .img-inner-info {
+        height: 27vh;
+    }
+    .footer_list {
+        width: 100%;
+        border-right: none;
+        padding-left: 50px;
+    }
+    .button_footer {
+        margin-left: 30%;
+    }
+    .footer_list-info {
+        margin-top: 30px;
+    }
+}
