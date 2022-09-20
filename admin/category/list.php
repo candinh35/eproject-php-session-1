@@ -23,7 +23,6 @@ if (isset($_GET['id']) && $_GET['id'] !== null) {
     $result = $categoryDAL->paging($id);
 }
 }
-
 if (isset($_GET['action'])) {
     if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
         $id = $_GET['id'];
