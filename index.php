@@ -82,7 +82,7 @@ $r = mysqli_fetch_assoc($logoList);
                         <li class="pt-4 pb-4 border-t flex items-center"><a href="news.html">TIN TỨC</a></li>
                         <li class="pt-4 pb-4 border-t flex items-center"><a href="contact.html">LIÊN HỆ</a></li>
                         <li class="pt-4 pb-4 border-t flex items-center"><a href="compare.html">SO SÁNH</a></li>
-                        <li class="pt-4 pb-4 border-t flex items-center">ĐĂNG NHẬP</li>
+                        <li class="pt-4 pb-4 border-t flex items-center"><a href="login.php">ĐĂNG NHẬP</a></li>
                         <li class="pt-4 pb-4 border-t flex items-center">GIỎ HÀNG</li>
                         <li class="pt-4 pb-4 border-t flex items-center"></li>
                         <?php  ?>
@@ -98,7 +98,7 @@ $r = mysqli_fetch_assoc($logoList);
             </div>
             <div class="flex lg:mr-14 mr-6 ">
                 <div class="hover:text-amber-600 relative before:content-[''] before:h-5 before:border-l-2 before:absolute before:right-0 before:border-gray-400 before:translate-y-1 mr-1 lg:block hidden">
-                    <button class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="./login.php">ĐĂNG NHẬP</button>
+                    <a class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="login.php">ĐĂNG NHẬP</a>
 
                 </div>
                 <div class="hover:text-amber-600 flex gap-1 product">
