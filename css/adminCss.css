@@ -1,12 +1,5 @@
-.category {
-    width: 16%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    background-color: red;
-}
-
-.content {
-    padding-left: 17%;
+.content1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

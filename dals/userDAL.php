@@ -1,44 +1,56 @@
-<?php 
+<?php
 
 require_once 'DB.php';
-class userDAL extends DB {
+class userDAL extends DB
+{
 
-    function getList(){
+    function getList()
+    {
         $sql = "SELECT * FROM users";
         $result = mysqli_query($this->connect, $sql);
         return $result;
     }
-
-     function getOne($id){
+    function getSearch($name)
+    {
+        $sql = "SELECT * fROM users WHERE email = '$name'";
+        $result = mysqli_query($this->connect, $sql);
+        return $result;
+    }
+    function getOne($id)
+    {
         $sql = "SELECT * FROM users WHERE id = $id";
         $result = mysqli_query($this->connect, $sql);
         $row = mysqli_fetch_assoc($result);
         return $row;
     }
 
-    function deleteOne($id){
+    function deleteOne($id)
+    {
         $sql = "DELETE FROM users WHERE id=$id";
-        mysqli_query($this->connect,$sql);
+        mysqli_query($this->connect, $sql);
     }
 
-    function add ($email , $password){
+    function add($email, $password)
+    {
         $sql = "INSERT INTO users (email,password) value ('$email', '$password') ";
         mysqli_query($this->connect, $sql);
     }
 
-    function edit( $id,$email,$password){
+    function edit($id, $email, $password)
+    {
         $sql = "UPDATE `users` SET `email`='$email',`password`='$password' WHERE id=$id";
-        mysqli_query($this->connect,$sql);
+        mysqli_query($this->connect, $sql);
     }
-    function login($email,$password){
+    function login($email, $password)
+    {
         $sql = "SELECT * FROM users where email = '$email' and password = '$password'";
-        $result = mysqli_query($this->connect,$sql);
+        $result = mysqli_query($this->connect, $sql);
         return $result;
     }
+    function paging($id){
+        $location = ($id-1)*10;
+        $sql = "SELECT * FROM users LIMIT $location ,10";
+        $result = mysqli_query($this->connect, $sql);
+    return $result;
+    }
 }
-
-   
-    
-    
-
-?>

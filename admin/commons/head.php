@@ -22,3 +22,4 @@
     <link rel="stylesheet" href="./../../layout/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="./../../layout/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="./../../css/adminCss.css">

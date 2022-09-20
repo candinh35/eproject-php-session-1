@@ -1,18 +1,21 @@
 <?php
 $dir = str_replace("admin\logo", "", __DIR__);
-
-require_once $dir . 'dals\logoDAL.php';
-require_once $dir . 'config.php';
+echo $dir;
+    require_once $dir . 'dals\logoDAL.php';
+echo $dir;
+echo '<br/>';
 $logoDAL = new logoDAL();
-$result = $logoDAL->getList();
-if(isset($_GET['action']) ){
-$id = $_GET['id'];
-$linkImg = $logoDAL->getOne($id);
-$logoDAL->deleteOne($id);
-if($linkImg){
-    $checked = $dir . $linkImg['logo'];
-    unlink($checked);
-}
+if(isset($_FILES['logo']) && $_FILES['logo']['name'] != null){
+    $relativeDir = 'uploadsLogo/' . date('m') . '-' . date('y');
+    $newDir = $dir . $relativeDir;
+    if(!file_exists($newDir) && !is_file($newDir)){
+        mkdir($newDir);
+    }
+    $imgName = time() . $_FILES['logo']['name'];
+    $newDir = $newDir . '/' . $imgName;
+    move_uploaded_file($_FILES['logo']['tmp_name'], $newDir);
+    $logo = $relativeDir . '/' . $imgName;
+    $logoDAL->add($logo);
 }
 ?>
 <!DOCTYPE html>
@@ -41,28 +44,15 @@ if($linkImg){
                     <div class="card-body">
                         <div class="tab-content p-0">
                             <!-- content -->
-                            <table border="1">
-                    <thead>
-                        <th>id</th>
-                        <th>logo</th>
-                    </thead>
-                    <tbody>
-                        <?php foreach($result as $row): ?>
-                        <tr>
-                            <td><?php echo $row['id']?></td>
-                            <td><img src=" <?php echo BASE_URL . $row['logo']?>" alt="" width="150"></td>
-                            <td>
-                                <a href="?action=delete&id=<?php echo $row['id']?>">xoa</a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                        <tr>
-                            <td>
-                                <a href="addLogo.php">them</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <form action="" method="post" enctype="multipart/form-data">
+                    <div>
+                        <label for="">logo</label>
+                    </div>
+
+                    <input type="file" placeholder="Email" name="logo">
+
+                    <button>add</button>
+                </form>
                         </div>
                     </div>
                     <!-- /.card-body -->
