@@ -50,7 +50,7 @@ if (isset($_GET['action'])) {
                 <div class="card content1">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i> User
+                            <i class="fas fa-chart-pie mr-1"></i> Category
                         </h3>
 
                     </div>
@@ -92,7 +92,7 @@ if (isset($_GET['action'])) {
                             <?php endforeach; ?>
                             <tr>
                                 <td>
-                                    <a href="add.php">thêm</a>
+                                    <a class="btn btn-dark" href="add.php">thêm</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -100,12 +100,12 @@ if (isset($_GET['action'])) {
                     <?php
                                         $i = 1;
                                         while ($i <= $sotrang) { ?>
-                                        <span style="width: 100px">
+                                        <div style="width: 100px; list-style:none; display:inline-block">
                                              <li class="page-item <?php if (!$id) {
                                                             $id = 1;
                                                         }
                                                         echo ($id == $i) ? 'active' : ''; ?>"><a style="text-align: center;" class="page-link" href="<?php $dir . 'admin/product/list.php' ?>?id=<?php echo $i ?>"><?php echo $i ?></a></li>
-                                        </span>
+                                        </div>
                                
                             <?php
                                             $i++;
