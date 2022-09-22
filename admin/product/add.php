@@ -9,7 +9,7 @@ if (isset($_POST['name'])) {
     $name = $_POST['name'];
     $price = $_POST['price'];
     $category_id = $_POST['category_id'];
-    $content = $_POST['content'];
+    $description = $_POST['description'];
     if (isset($_FILES['image']) && $_FILES['image']['name'] != null) {
         $relativeDir = 'uploads/' . date('m') . '-' . date('y');
         $dirImg = $dir . $relativeDir;
@@ -22,7 +22,7 @@ if (isset($_POST['name'])) {
         move_uploaded_file($imgTmp, $image);
         $upImage = $relativeDir . '/' . $imgName;
     }
-    $productDAL->add($name, $price, $upImage, $content, $category_id);
+    $productDAL->add($name, $price, $upImage, $description, $category_id);
 }
 ?>
 <!DOCTYPE html>
@@ -49,8 +49,8 @@ if (isset($_POST['name'])) {
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="tab-content p-0">
-                            <!-- content -->
+                        <div class="tab-description p-0">
+                            <!-- description -->
                             <form action="" method="post" enctype="multipart/form-data">
                         <table border="1" cellpadding= "20" cellspacing = 0>
                             <tr>
@@ -83,7 +83,7 @@ if (isset($_POST['name'])) {
                                         <label for="">mô tả</label>
                                     </div>
                                     
-                                <textarea name="content" id="" cols="90" rows="10"></textarea>
+                                <textarea name="description" id="" cols="90" rows="10"></textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -108,7 +108,7 @@ if (isset($_POST['name'])) {
         </div>
 
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.description-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 

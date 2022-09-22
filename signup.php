@@ -2,21 +2,26 @@
 $dir = __DIR__;
 require_once $dir .'/dals/userDAL.php';
 $userDAL = new userDAL();
+
     if(isset($_POST['email'])){
         $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
         $password = md5($_POST['password']);
-        $result = $userDAL->login($email,$password);
-        $data = $result ->fetch_row();
-        var_dump($data);
-        if(mysqli_num_rows($result) > 0){
-            $_SESSION['login'] = $data;
-            echo $_SESSION['login'][0];
-            echo $_SESSION['login'][1];
-
+        $password1 = md5($_POST['password1']);
+        if($password != $password1){
+            $failed = "mật khẩu không trùng nhau vui lòng nhập lại";
         }else{
-            $failed = "tài khoản hoặc mật khâu không chính xác vui lòng nhập lại!";
+            $result = $userDAL->signup($email);
+            if(mysqli_num_rows($result) <= 0){
+                $userDAL->add($email,$password,$phone,$address);
+                $success = "đăng ký tài khoản thành công vui lòng quay lại đăng nhập";
+            }else{
+                $failed = "Email đã được đăng ký";
+            }
+
         }
-        echo $password;
+
     }
 ?>
 <!DOCTYPE html>
@@ -27,7 +32,7 @@ $userDAL = new userDAL();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style_layout.css">
+    <link rel="stylesheet" href="./css/style_layout.css?id=<?php echo time()?>">
     <link rel="stylesheet" href="./../css/compare.css">
     <link rel="stylesheet" href="./../css/fontawesome-free-6.2.0-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap" rel="stylesheet">
@@ -50,7 +55,7 @@ $userDAL = new userDAL();
                 </label>
                 <div class="nav_mobile1 fixed top-0 left-0 bottom-0 w-80 max-w-full bg-white z-20 -translate-x-80">
                     <div class="relative left-6 mb-5">
-                        <input class="rounded-2xl focus:outline-none w-56 h-8 mt-11 p-4 pb-5 f bg-zinc-200" type="text" placeholder="Tìm kiếm...">
+                        <input class="rounded-2xl focus:outline-none w-56 h-8 mt-11 p-4 pb-5 f bg-zinc-200" type="text" name="" placeholder="Tìm kiếm...">
                         <i class="absolute right-28 top-14 fa-solid fa-magnifying-glass"></i>
                     </div>
                     <ul class="ml-6">
@@ -68,7 +73,7 @@ $userDAL = new userDAL();
                 </div>
             </div>
             <div class="relative left-14 hidden lg:block">
-                <input class="rounded-2xl focus:outline-none w-80 h-8  p-4 pb-5 f bg-zinc-200" type="text" placeholder="Tìm kiếm...">
+                <input class="rounded-2xl focus:outline-none w-80 h-8  p-4 pb-5 f bg-zinc-200" type="text" name="" placeholder="Tìm kiếm...">
                 <i class="absolute right-3 top-2.5 fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="w-52 h-14 lg:mr-0 mr-16">
@@ -76,7 +81,7 @@ $userDAL = new userDAL();
             </div>
             <div class="flex lg:mr-14 mr-6 ">
                 <div class="hover:text-amber-600 relative before:content-[''] before:h-5 before:border-l-2 before:absolute before:right-0 before:border-gray-400 before:translate-y-1 mr-1 lg:block hidden">
-                    <button class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="./login.php">ĐĂNG NHẬP</button>
+                    <a class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="login.php">ĐĂNG NHẬP</a>
 
                 </div>
                 <div class="hover:text-amber-600 flex gap-1 product">
@@ -116,6 +121,13 @@ $userDAL = new userDAL();
     <div class="modal-signup">
         <div class="modal_container-signup js-modal_container-signup">
             <div class="modal_content-signup">
+                <div class="notification">
+                    <?php if(isset($failed)){
+                        echo $failed;
+                    }else if(isset($success)){
+                        echo $success;
+                    } ?>
+                </div>
                 <header class="modal_header-signup">
                     ĐĂNG KÝ
                 </header>
@@ -123,11 +135,15 @@ $userDAL = new userDAL();
                     <div class="modal_body-signup">
 
                         <label for="" class="modal_label-signup">Tên tài khoản hoặc địa chỉ email *</label>
-                        <input required class="modal_input-signup" type="email" placeholder="Email ...">
+                        <input required class="modal_input-signup" type="email" name="email" placeholder="Email ...">
                         <label for="" class="modal_label-signup">Mật khẩu *</label>
-                        <input required class="modal_input-signup" type="password" placeholder="Mật Khẩu">
+                        <input required class="modal_input-signup" type="password" name="password" placeholder="Mật Khẩu">
                         <label for="" class="modal_label-signup">Nhập lại mật khẩu *</label>
-                        <input required class="modal_input-signup" type="password" placeholder="Mật Khẩu">
+                        <input required class="modal_input-signup" type="password" name="password1" placeholder="Mật Khẩu">
+                        <label for="" class="modal_label-signup">Địa Chỉ *</label>
+                        <input required class="modal_input-signup" type="text" name="address" placeholder="Địa Chỉ">
+                        <label for="" class="modal_label-signup">Phone *</label>
+                        <input required class="modal_input-signup" type="text" name="phone" placeholder="Phone">
                         <button id="signup">ĐĂNG KÝ</button>
 
                     </div>
@@ -158,7 +174,7 @@ $userDAL = new userDAL();
                     </div>
                     <p class="text-base mt-6 ">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet ....</p>
                     <div class="mt-6 ">
-                        <input class="input_info " type="email " placeholder="Email ... ">
+                        <input class="input_info " type="email " name="" placeholder="Email ... ">
                         <div class="button_footer flex justify-center items-center ">
                             <button>ĐĂNG KÝ</button>
                         </div>

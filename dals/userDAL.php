@@ -30,9 +30,9 @@ class userDAL extends DB
         mysqli_query($this->connect, $sql);
     }
 
-    function add($email, $password)
+    function add($email, $password,$phone, $address)
     {
-        $sql = "INSERT INTO users (email,password) value ('$email', '$password') ";
+        $sql = "INSERT INTO users (email,password,phone,address) value ('$email', '$password','$phone', '$address') ";
         mysqli_query($this->connect, $sql);
     }
 
@@ -44,6 +44,12 @@ class userDAL extends DB
     function login($email, $password)
     {
         $sql = "SELECT * FROM users where email = '$email' and password = '$password'";
+        $result = mysqli_query($this->connect, $sql);
+        return $result;
+    }
+    function signup($email)
+    {
+        $sql = "SELECT * FROM users where email = '$email'";
         $result = mysqli_query($this->connect, $sql);
         return $result;
     }

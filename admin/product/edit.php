@@ -22,7 +22,7 @@ $row =  $productDAL->getOne($id);
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
     $price = $_POST['price'];
-    $content = $_POST['content'];
+    $description = $_POST['description'];
     $category_id = $_POST['category_id'];
     if (isset($_FILES['image']) && $_FILES['image']['name'] != null) {
         $relativeDir = 'uploads/' . date('m') . '-' . date('y');
@@ -38,9 +38,9 @@ if (isset($_POST['name'])) {
             unlink($dir . $row['image']);
         }
         $image = $relativeDir . '/' . $nameImg;
-        $productDAL->edit($id, $name, $price, $content, $image, $category_id);
+        $productDAL->edit($id, $name, $price, $description, $image, $category_id);
     }
-    $productDAL->edit1($id, $name, $price, $content, $category_id);
+    $productDAL->edit1($id, $name, $price, $description, $category_id);
 
     echo $price;
 }
@@ -69,8 +69,8 @@ if (isset($_POST['name'])) {
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="tab-content p-0">
-                            <!-- content -->
+                        <div class="tab-description p-0">
+                            <!-- description -->
                             <form action="" method="post" enctype="multipart/form-data">
                                 <table border="1" cellpadding = 10>
 
@@ -101,7 +101,7 @@ if (isset($_POST['name'])) {
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <textarea name="content" id="" cols="80" rows="10"><?php echo $row['content'] ?></textarea>
+                                        <textarea name="description" id="" cols="80" rows="10"><?php echo $row['description'] ?></textarea>
                                     </td>
                                 </tr>
 
@@ -125,7 +125,7 @@ if (isset($_POST['name'])) {
         </div>
 
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.description-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 

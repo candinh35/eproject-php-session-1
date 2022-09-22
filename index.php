@@ -10,20 +10,6 @@ require_once $dir . '/Utils.php';
 
 // kiểm tra login
 $userDAL = new userDAL();
-if (isset($_POST['email'])) {
-    $email = $_POST['email'];
-    $password = md5($_POST['password']);
-    $result = $userDAL->login($email, $password);
-    if (mysqli_num_rows($result) > 0) {
-        $_SESSION['login'] = [
-            'email' => $email,
-            'password' => $password
-        ];
-    } else {
-        $failed = "tài khoản hoặc mật khâu không chính xác vui lòng nhập lại!";
-    }
-    echo $_SESSION['login']['id'];
-}
 
 //  kết nối tơi trang category
 
@@ -33,13 +19,25 @@ $categoryList = $categoryDAL->getList();
 //  kết nối tơi trang product
 
 $productDAL = new productDAL();
-
+// kiểm tra session  cart
+if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
+    $cart = $_SESSION['cart'];
+    $order = array();
+    $order = implode(",", array_keys($cart));
+    // lấy ra các product có id lưu trong cart
+    $result = $productDAL->getOrder($order);
+}
 
 // kết nối tới logo 
 
 $logoDAL = new logoDAL();
 $logoList = $logoDAL->getList();
 $r = mysqli_fetch_assoc($logoList);
+
+// kiểm tra đăng xuất
+if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+    unset($_SESSION['login']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,9 +46,10 @@ $r = mysqli_fetch_assoc($logoList);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style_layout.css">
-    <link rel="stylesheet" href="./css/fontawesome-free-6.2.0-web/css/all.css">
+    <script src="https://cdn.tailwindcss.com?id=<?php echo time() ?>"></script>
+    <link rel="stylesheet" href="./css/style_layout.css?id=<?php echo time() ?>">
+    <link rel="stylesheet" href="./css/adminCss.css?id=<?php echo time() ?>">
+    <link rel="stylesheet" href="./css/fontawesome-free-6.2.0-web/css/all.css?id=<?php echo time() ?>">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap" rel="stylesheet">
 
     <title>compare</title>
@@ -85,7 +84,7 @@ $r = mysqli_fetch_assoc($logoList);
                         <li class="pt-4 pb-4 border-t flex items-center">ĐĂNG NHẬP</li>
                         <li class="pt-4 pb-4 border-t flex items-center">GIỎ HÀNG</li>
                         <li class="pt-4 pb-4 border-t flex items-center"></li>
-                        <?php  ?>
+                        <?php ?>
                     </ul>
                 </div>
             </div>
@@ -97,14 +96,52 @@ $r = mysqli_fetch_assoc($logoList);
                 <a href="index.php"><img src="<?php echo $r['logo']; ?>" alt="logo-mona-furniture-14" class="w-full h-full"></a>
             </div>
             <div class="flex lg:mr-14 mr-6 ">
-                <div class="hover:text-amber-600 relative before:content-[''] before:h-5 before:border-l-2 before:absolute before:right-0 before:border-gray-400 before:translate-y-1 mr-1 lg:block hidden">
-                    <button class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="./login.php">ĐĂNG NHẬP</button>
-
+                <div class=" relative before:content-[''] before:h-5 before:border-l-2 before:absolute before:right-0 before:border-gray-400 before:translate-y-1 mr-1 lg:block hidden">
+                    <?php
+                    if (isset($_SESSION['login'])) { ?>
+                        <div class="login">
+                            <i class="hover:text-amber-600 text-xl mr-3 fa-solid fa-user"></i>
+                            <ul class="login-list">
+                                <li class="mb-3">
+                                    <a class="hover:text-amber-600" href="">quản lý tài khoản</a>
+                                </li>
+                                <li>
+                                    <a class="hover:text-amber-600" href="?logout=1">Thoat</a>
+                                </li>
+                            </ul>
+                        </div>
+                    <?php } else {
+                    ?>
+                        <a class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="login.php">ĐĂNG NHẬP</a>
+                    <?php } ?>
                 </div>
                 <div class="hover:text-amber-600 flex gap-1 product">
-                    <a class="hover:text-amber-600 text-lg lg:mr-1 text-zinc-500 lg:block hidden" href="">GIỎ HÀNG</a>
+                    <a class="hover:text-amber-600 text-lg lg:mr-1 text-zinc-500 lg:block hidden" href="cart.php">GIỎ HÀNG</a>
                     <i class="fa-solid fa-cart-plus lg:text-2xl text-2xl"></i>
-                    <div class="product_box">chưa có sản phẩm trong giỏ hàng</div>
+                    <?php if (isset($cart)) { ?>
+                        <div class="product_box1">
+                            <div class="mb-3">
+                                <?php foreach ($result as $productCart) : ?>
+
+                                    <div class="flex gap-2 mb-3 border-b-2">
+                                        <img src="<?php echo $productCart['image'] ?>" alt="" width="100">
+                                        <div>
+                                            <h4><?php echo $productCart['name'] ?></h4>
+                                            <div class="flex gap-2 font-extrabold">
+                                                <p><?php echo $cart[$productCart['id']] ?></p>
+                                                <p>*</p>
+                                                <p><?php echo Utils::formatMoney($productCart['price'])  ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <a href="cart.php" class="mt-3 uppercase w-full rounded-md  bg-amber-400  block text-center text-teal-50 py-2">xem giỏ hàng</a>
+                            </div>
+                        </div>
+
+                    <?php } else { ?>
+                        <div class="product_box">chưa có sản phẩm trong giỏ hàng</div>
+                    <?php } ?>
                 </div>
             </div>
         </nav>
@@ -147,43 +184,43 @@ $r = mysqli_fetch_assoc($logoList);
     <!-- content -->
     <!-- SOFA -->
     <div class="container lg:w-11/12 w-full lg:mx-auto mx-0 mt-14">
-        <?php 
-        $arrId = [];
-        $arrName = [];
-        foreach ($categoryList as $category) :
-            array_push($arrId,$category['id']);
-            array_push($arrName,$category['name']);
-             endforeach;
-            ?>
-           <h3 class="text-2xl"><?php  echo $arrName[0]; ?></h3>
-                <?php $productList = $productDAL->getListByIdCategory($arrId[0]);
-                ?>
-                <div class="grid lg:grid-cols-4 grid-cols-2">
-                
-                <?php foreach ($productList as $row) : ?>
-                    <div>
-                        <a href="">
-                            <img class="" src="<?php echo BASE_URL . $row['image'] ?>" alt="">
-                        </a>
-                        
-                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
-                            <!-- category -->
-                            <P class="text-xs opacity-60 uppercase"><?php echo $arrName[0] ?></P>
+        <?php
+        foreach ($categoryList
 
-                            <!-- name -->
-                            <a class="link_sofa" href="">
-                                <h4><?php echo $row['name'] ?></h4>
+            as $category) :
+        ?>
+            <h3 class="text-2xl mb-4"><?php if ($category['position'] == 3) {
+                                            echo $category['name'];
+                                        ?></h3>
+            <?php $productList = $productDAL->getListByIdCategory($category['id']);
+            ?>
+            <div class="grid lg:grid-cols-4 grid-cols-2 lg:gap-3 gap-2 ml-5">
+
+                <?php foreach ($productList as $row) : ?>
+                    <div class="product_item">
+                        <a href="detail.php?id=<?php echo $row['id'] ?>">
+                            <img src="<?php echo BASE_URL . $row['image']; ?>" width="300" class="product_sofa">
+                        </a>
+                        <a class="product_link" href="">
+                            <i class="absolute -bottom-4 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
+                        </a>
+                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
+                            <P class="text-xs opacity-60"><?php echo $row['name']; ?></P>
+                            <a class="link_sofa" href="detail.php?<?php echo $row['id'] ?>">
+                                <h4><?php echo $row['name']; ?></h4>
                             </a>
-                            <strong><?php echo Utils::formatMoney($row['price']) ?></strong>
+                            <strong><?php echo Utils::formatMoney($row['price']); ?></strong>
                         </div>
                     </div>
-
-            <?php endforeach;
-            ?>
-        </div>
+        <?php
+                                            endforeach;
+                                        }
+                                    endforeach;
+        ?>
+            </div>
     </div>
-                    <!-- ngăn cách -->
-        <div class="section-content ">
+    <!-- ngăn cách -->
+    <div class="section-content ">
         <div class="lg:w-11/12 w-full lg:mx-auto lg:flex justify-between section-content1">
             <div class="section_item ">
                 <i class="fa-solid fa-truck-moving text-4xl section_icon"></i>
@@ -201,41 +238,45 @@ $r = mysqli_fetch_assoc($logoList);
                 <h2 class="mt-7 text-2xl text-white">SAVE WHEN SHOPPING IN MONA</h2>
                 <p class="mt-2 text-white">Lorem ipsum dolor sit amet, consectetuer</p>
             </div>
-
-
         </div>
     </div>
-
     <!-- KỆ TIVI -->
     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
-           <h3 class="text-2xl"><?php  echo $arrName[1]; ?></h3>
-                <?php $productList = $productDAL->getListByIdCategory($arrId[1]);
-                ?>
-                <div class="grid lg:grid-cols-4 grid-cols-2">
-                
-                <?php foreach ($productList as $row) : ?>
-                    <div>
-                        <a href="">
-                            <img class="" src="<?php echo BASE_URL . $row['image'] ?>" alt="">
-                        </a>
-                        
-                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
-                            <!-- category -->
-                            <P class="text-xs opacity-60 uppercase"><?php echo $arrName[1] ?></P>
+        <?php
+        foreach ($categoryList
 
-                            <!-- name -->
-                            <a class="link_sofa" href="">
-                                <h4><?php echo $row['name'] ?></h4>
+            as $category) :
+        ?>
+            <h3 class="text-2xl mb-4"><?php if ($category['position'] == 2) {
+                                            echo $category['name'];
+                                        ?></h3>
+            <?php $productList = $productDAL->getListByIdCategory($category['id']);
+            ?>
+            <div class="grid lg:grid-cols-4 grid-cols-2 lg:gap-3 gap-2 ml-5">
+
+                <?php foreach ($productList as $row) : ?>
+                    <div class="product_item">
+                        <a href="detail.php?id=<?php echo $row['id'] ?>">
+                            <img src="<?php echo BASE_URL . $row['image']; ?>" width="300" class="product_sofa">
+                        </a>
+                        <a class="product_link" href="">
+                            <i class="absolute -bottom-4 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
+                        </a>
+                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
+                            <P class="text-xs opacity-60"><?php echo $row['name']; ?></P>
+                            <a class="link_sofa" href="detail.php?id=<?php echo $row['id'] ?>">
+                                <h4><?php echo $row['name']; ?></h4>
                             </a>
-                            <strong><?php echo Utils::formatMoney($row['price']) ?></strong>
+                            <strong><?php echo Utils::formatMoney($row['price']); ?></strong>
                         </div>
                     </div>
-            <?php endforeach;
-            ?>
-        </div>
+        <?php
+                                            endforeach;
+                                        }
+                                    endforeach;
+        ?>
+            </div>
     </div>
-
-
     <!-- ngăn cách -->
     <div class="grid lg:grid-cols-2 grid-cols-1 gap-4 h-96 mt-14 w-full">
         <div class="img-inner">
@@ -246,34 +287,42 @@ $r = mysqli_fetch_assoc($logoList);
 
         </div>
     </div>
-     <!-- BÀN GHẾ -->
-     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
-           <h3 class="text-2xl"><?php  echo $arrName[2]; ?></h3>
-                <?php $productList = $productDAL->getListByIdCategory($arrId[2]);
-                ?>
-                <div class="grid lg:grid-cols-4 grid-cols-2">
-                
-                <?php foreach ($productList as $row):?>
-                    <div>
-                        <a href="">
-                            <img class="" src="<?php echo BASE_URL . $row['image'] ?>" alt="" width="300">
-                        </a>
-                        
-                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
-                            <!-- category -->
-                            <P class="text-xs opacity-60"><?php echo $arrName[2] ?></P>
+    <!-- BÀN GHẾ -->
+    <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
+        <?php
+        foreach ($categoryList
 
-                            <!-- name -->
-                            <a class="link_sofa" href="">
-                                <h4><?php echo $row['name'] ?></h4>
+            as $category) :
+        ?>
+            <h3 class="text-2xl mb-4"><?php if ($category['position'] == 1) {
+                                            echo $category['name'];
+                                        ?></h3>
+            <?php $productList = $productDAL->getListByIdCategory($category['id']);
+            ?>
+            <div class="grid lg:grid-cols-4 grid-cols-2 lg:gap-3 gap-2 ml-5">
+
+                <?php foreach ($productList as $row) : ?>
+                    <div class="product_item">
+                        <a href="detail.php?id=<?php echo $row['id'] ?>">
+                            <img src="<?php echo BASE_URL . $row['image']; ?>" width="300" class="product_sofa">
+                        </a>
+                        <a class="product_link" href="">
+                            <i class="absolute -bottom-4 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
+                        </a>
+                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
+                            <P class="text-xs opacity-60"><?php echo $row['name']; ?></P>
+                            <a class="link_sofa" href="detail.php?id=<?php echo $row['id'] ?>">
+                                <h4><?php echo $row['name']; ?></h4>
                             </a>
-                            <strong><?php echo Utils::formatMoney($row['price']) ?></strong>
+                            <strong><?php echo Utils::formatMoney($row['price']); ?></strong>
                         </div>
                     </div>
-
-            <?php endforeach;
-            ?>
-        </div>
+        <?php
+                                            endforeach;
+                                        }
+                                    endforeach;
+        ?>
+            </div>
     </div>
     </div>
     <!-- FOOTER -->
@@ -284,11 +333,11 @@ $r = mysqli_fetch_assoc($logoList);
                     <h2 class="text-2xl font-semibold leading-9 ml-4 ">ĐIỀU HƯỚNG</h2>
 
                     <ul class="mt-5 ">
-                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Trang chủ</a> </li>
-                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Về chúng tôi</a> </li>
-                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Sản phẩm</a> </li>
-                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Điểm tin hữu ích</a> </li>
-                        <li class="text-xl mt-3 footer_list-link "><a href="contact.html">Liên hệ</a> </li>
+                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Trang chủ</a></li>
+                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Về chúng tôi</a></li>
+                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Sản phẩm</a></li>
+                        <li class="text-xl mt-3 footer_list-link "><a href=" ">Điểm tin hữu ích</a></li>
+                        <li class="text-xl mt-3 footer_list-link "><a href="contact.html">Liên hệ</a></li>
                     </ul>
                 </div>
                 <div class="text-center info_footer lg:mt-0 mt-8">
@@ -296,9 +345,10 @@ $r = mysqli_fetch_assoc($logoList);
                         <a href="index.php">
                             <img src="<?php echo $r['logo']; ?>" alt="logo-mona-furniture-14 " class="w-full h-full ">
                         </a>
-                        
+
                     </div>
-                    <p class="text-base mt-6 ">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet ....</p>
+                    <p class="text-base mt-6 ">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                        nibh euismod tincidunt ut laoreet ....</p>
                     <div class="mt-6 ">
                         <input class="input_info " type="email " placeholder="Email ... ">
                         <div class="button_footer flex justify-center items-center ">
@@ -333,6 +383,7 @@ $r = mysqli_fetch_assoc($logoList);
     </footer>
 
 </body>
-<script src="./../js/main.js "></script>
+<script src="./js/main.js?id=<?php echo time() ?>"></script>
+<script src="./js/logout.js?id=<?php echo time() ?>"></script>
 
 </html>

@@ -10,13 +10,10 @@ $userDAL = new userDAL();
         $data = $result -> fetch_row();
         if(mysqli_num_rows($result) > 0){
             $_SESSION['login'] = $data;
-            echo $_SESSION['login'][0];
-            echo $_SESSION['login'][1];
-            echo $_SESSION['login'][2];
+            header('location:index.php');
         }else{
             $failed = "tài khoản hoặc mật khâu không chính xác vui lòng nhập lại!";
         }
-        
     }
 ?>
 <!DOCTYPE html>
@@ -73,12 +70,11 @@ $userDAL = new userDAL();
                 <i class="absolute right-3 top-2.5 fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="w-52 h-14 lg:mr-0 mr-16">
-                <a href="index.html"><img src="./../img/logo/logo-mona-furniture-14.png" alt="logo-mona-furniture-14" class="w-full h-full"></a>
+                <a href="index.php"><img src="" alt="logo-mona-furniture-14" class="w-full h-full"></a>
             </div>
             <div class="flex lg:mr-14 mr-6 ">
                 <div class="hover:text-amber-600 relative before:content-[''] before:h-5 before:border-l-2 before:absolute before:right-0 before:border-gray-400 before:translate-y-1 mr-1 lg:block hidden">
-                    <button class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="./login.php">ĐĂNG NHẬP</button>
-
+                        <button class="hover:text-amber-600 text-lg mr-2 text-zinc-500 login-js" href="login.php">ĐĂNG NHẬP</button>
                 </div>
                 <div class="hover:text-amber-600 flex gap-1 product">
                     <a class="hover:text-amber-600 text-lg lg:mr-1 text-zinc-500 lg:block hidden" href="">GIỎ HÀNG</a>
@@ -141,7 +137,7 @@ $userDAL = new userDAL();
                     </div>
                     <footer class="flex justify-between">
                         <a class="modal_footer" href="">Quên mật khẩu?</a>
-                        <a href="sigin.php" class="modal_signup">Bạn chưa có tài khoản ?</a>
+                        <a href="signup.php" class="modal_signup">Bạn chưa có tài khoản ?</a>
                 </form>
 
             </div>

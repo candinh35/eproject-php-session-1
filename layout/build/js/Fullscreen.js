@@ -82,7 +82,7 @@ class Fullscreen {
     }
 
     const _options = $.extend({}, Default, typeof config === 'object' ? config : data)
-    const plugin = new Fullscreen($(this), _options)
+    const   plugin = new Fullscreen($(this), _options)
 
     $(this).data(DATA_KEY, typeof config === 'object' ? config : data)
 

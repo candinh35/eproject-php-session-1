@@ -6,7 +6,7 @@ $productDAL = new productDAL();
    $resultNum = $productDAL->getList();
     // trả về số sản phẩm có trong giỏ hàng
 $number = mysqli_num_rows($resultNum);
-//  hàm ceil là làm trò lên 
+//  hàm ceil là làm tròn lên 
 $sotrang = ceil($number / 10);
 if (isset($_POST['min']) && $_POST['min'] != null) {
     $min = $_POST['min'];
@@ -66,8 +66,8 @@ if (isset($_GET['action'])) {
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="tab-content p-0">
-                            <!-- content -->
+                        <div class="tab-description p-0">
+                            <!-- description -->
    
                             <form action="" method="post" class="search">
                                 <label for="">min</label>
@@ -85,7 +85,7 @@ if (isset($_GET['action'])) {
                                         <th>name</th>
                                         <th> price</th>
                                         <th>image</th>
-                                        <th>content</th>
+                                        <th>description</th>
                                         <th>category_id</th>
                                     </tr>
                                 </thead>
@@ -108,7 +108,7 @@ if (isset($_GET['action'])) {
 
                                             </td>
                                             <td>
-                                                <?php echo $row['content']; ?>
+                                                <?php echo $row['description']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $row['category_name']; ?>
@@ -148,7 +148,7 @@ if (isset($_GET['action'])) {
         </div>
 
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.description-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 
