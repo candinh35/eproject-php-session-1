@@ -8,11 +8,6 @@ require_once 'config.php';
 require_once 'dals/DB.php';
 
 
-if(!isset($_SESSION['cart'])){
-    $_SESSION['cart'] = array();
-}
-
-
 // kết nối tơi bảng category
 $categoryDAL = new categoryDAL();
 $categoryList = $categoryDAL->getList();
@@ -21,6 +16,14 @@ $categoryList = $categoryDAL->getList();
 $productDAL = new productDAL();
 $relateList = new productDAL();
 
+// kiểm tra session  cart
+if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
+    $cart = $_SESSION['cart'];
+    $order = array();
+    $order = implode(",", array_keys($cart));
+    // lấy ra các product có id lưu trong cart
+    $cartProduct = $productDAL->getOrder($order);
+}
 // lấy ra 1 sản phẩm để in ra detail
 if (!isset($_GET['id']) && !is_numeric($_GET['id'])) {
     header('location:index.php');
@@ -122,7 +125,30 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
             <div class="hover:text-amber-600 flex gap-1 product">
                 <a class="hover:text-amber-600 text-lg lg:mr-1 text-zinc-500 lg:block hidden" href="">GIỎ HÀNG</a>
                 <i class="fa-solid fa-cart-plus lg:text-2xl text-2xl"></i>
-                <div class="product_box">chưa có sản phẩm trong giỏ hàng</div>
+                <?php if (isset($cart)) { ?>
+                        <div class="product_box1">
+                            <div class="mb-3">
+                                <?php foreach ($cartProduct as $productCart) : ?>
+
+                                    <div class="flex gap-2 mb-3 border-b-2">
+                                        <img src="<?php echo $productCart['image'] ?>" alt="" width="100">
+                                        <div>
+                                            <h4><?php echo $productCart['name'] ?></h4>
+                                            <div class="flex gap-2 font-extrabold">
+                                                <p><?php echo $cart[$productCart['id']] ?></p>
+                                                <p>*</p>
+                                                <p><?php echo Utils::formatMoney($productCart['price'])  ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <a href="cart.php" class="mt-3 uppercase w-full rounded-md  bg-amber-400  block text-center text-teal-50 py-2">xem giỏ hàng</a>
+                            </div>
+                        </div>
+
+                    <?php } else { ?>
+                        <div class="product_box">chưa có sản phẩm trong giỏ hàng</div>
+                    <?php } ?>
             </div>
         </div>
     </nav>

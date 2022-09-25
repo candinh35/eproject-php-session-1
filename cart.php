@@ -8,21 +8,44 @@ $productDAL = new productDAL();
 //lấy dữ liệu gửi lên từ submit
 
 if (isset($_GET['action'])) {
+
+
     function updateCart($add = false)
     {
         foreach ($_POST['quantity'] as $id => $quantity) {
-            if($add){
-                 $_SESSION['cart'][$id] += $quantity;
-            }else{
-                $_SESSION['cart'][$id] = $quantity;
+            // nếu người dùng cho số lượng <= 0 thì xóa sản phẩm
+            if ($quantity <= 0) {
+                unset($_SESSION['cart'][$id]);
+                header('location:cart.php');
+            } else {
+                // kiểm tra xem đã có id của product trong giỏ hàng chưa
+                if (isset($_SESSION['cart'])) {
+                    $cart =  array_keys($_SESSION['cart']);
+                    $flag = true;
+                    foreach ($cart as $cartId) {
+                        if ($cartId == $id) {
+                            $flag = false;
+                        }
+                        //    nếu có rồi thì công thêm quantity vào 
+                    }
+                }
+                if ($add && $flag == false) {
+                    $_SESSION['cart'][$id] += $quantity;
+                } else {
+                    $_SESSION['cart'][$id] = $quantity;
+                }
             }
-           
         }
     };
-
+    // phân loại action được gửi lên
     switch ($_GET['action']) {
         case "add":
-            updateCart(true);
+            if ($_POST['quantity'] != null) {
+                updateCart(true);
+            } else {
+                updateCart();
+            }
+
             break;
         case 'delete':
             if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -56,6 +79,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
 // tạo biến để lấy tổng giá
 
 $totally = 0;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -167,8 +191,9 @@ $totally = 0;
     <!-- content -->
     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
         <?php if (isset($cart)) { ?>
-            <form action="cart.php?action=submit" method="post">
-                <div class="flex gap-5 justify-between">
+
+            <div class="flex gap-5 justify-between">
+                <form action="cart.php?action=submit" method="post">
                     <div class="product_order border-r-2 pr-10">
 
                         <table cellpadding=15 class="mb-7">
@@ -200,9 +225,9 @@ $totally = 0;
                                             </div>
                                         </td>
                                         <td><?php
-                                        // tính tổng tiền tất cả sản phẩm trong giỏ hàng
-                                        $totally += ($row['price'] * $cart[$row['id']]);
-                                        echo Utils::formatMoney(($row['price'] * $cart[$row['id']])) ?></td>
+                                            // tính tổng tiền tất cả sản phẩm trong giỏ hàng
+                                            $totally += ($row['price'] * $cart[$row['id']]);
+                                            echo Utils::formatMoney(($row['price'] * $cart[$row['id']])) ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -213,26 +238,28 @@ $totally = 0;
                         </div>
 
                     </div>
-                    <div class="order w-4/12">
-                        <h3 class="text-xl uppercase font-medium">tổng số lượng</h3>
-                        <div class="flex justify-between border-b-2 pb-4 pt-6">
-                            <p>Tổng cộng</p>
-                            <p class="font-bold"><?php echo Utils::formatMoney($totally)?></p>
-                        </div>
-                        <div class="flex justify-between border-b-2 pb-4 pt-6">
-                            <p>Giao hàng 1</p>
-                            <p>Giao hàng miễn phí</p>
-                        </div>
-                        <div class="flex justify-between border-b-2 pb-4 pt-6">
-                            <p>Tổng cộng</p>
-                            <p class="font-bold"><?php echo Utils::formatMoney($totally)?></p>
-                        </div>
-                        <div class="mt-6">
-                            <a href="index.php" class="bg-gray-800 text-black border-2 px-10 py-2 text-white uppercase ">Tiến hành thanh toán</a>
-                        </div>
+                </form>
+                <div class="order w-4/12">
+
+                    <h3 class="text-xl uppercase font-medium">tổng số lượng</h3>
+                    <div class="flex justify-between border-b-2 pb-4 pt-6">
+                        <p>Tổng cộng</p>
+                        <p class="font-bold"><?php echo Utils::formatMoney($totally) ?></p>
+                    </div>
+                    <div class="flex justify-between border-b-2 pb-4 pt-6">
+                        <p>Giao hàng 1</p>
+                        <p>Giao hàng miễn phí</p>
+                    </div>
+                    <div class="flex justify-between border-b-2 pb-4 pt-6">
+                        <p>Tổng cộng</p>
+                        <p class="font-bold"><?php echo Utils::formatMoney($totally) ?></p>
+                    </div>
+                    <div class="mt-6">
+                        <a href="" class="bg-gray-800 text-black border-2 px-10 py-2 text-white uppercase ">Tiến hành thanh toán</a>
                     </div>
                 </div>
-            </form>
+            </div>
+
         <?php } else { ?>
             <div class="mb-40">
                 <h3 class="uppercase text-center text-2xl">chưa có sản phẩm trong giỏ hàng</h3>

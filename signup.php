@@ -1,28 +1,42 @@
-<?php 
+<?php
+session_start();
 $dir = __DIR__;
-require_once $dir .'/dals/userDAL.php';
+require_once $dir . '/dals/userDAL.php';
+require_once 'Utils.php';
+require_once 'dals/productDAL.php';
+
 $userDAL = new userDAL();
 
-    if(isset($_POST['email'])){
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        $password = md5($_POST['password']);
-        $password1 = md5($_POST['password1']);
-        if($password != $password1){
-            $failed = "mật khẩu không trùng nhau vui lòng nhập lại";
-        }else{
-            $result = $userDAL->signup($email);
-            if(mysqli_num_rows($result) <= 0){
-                $userDAL->add($email,$password,$phone,$address);
-                $success = "đăng ký tài khoản thành công vui lòng quay lại đăng nhập";
-            }else{
-                $failed = "Email đã được đăng ký";
-            }
-
+if (isset($_POST['email'])) {
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $password = md5($_POST['password']);
+    $password1 = md5($_POST['password1']);
+    if ($password != $password1) {
+        $failed = "mật khẩu không trùng nhau vui lòng nhập lại";
+    } else {
+        $result = $userDAL->signup($email);
+        if (mysqli_num_rows($result) <= 0) {
+            $userDAL->add($email, $password, $phone, $address);
+            $success = "đăng ký tài khoản thành công vui lòng quay lại đăng nhập";
+        } else {
+            $failed = "Email đã được đăng ký";
         }
-
     }
+}
+
+//kết nối tới bảng product
+$productDAL = new productDAL();
+
+// kiểm tra session  cart
+if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
+    $cart = $_SESSION['cart'];
+    $order = array();
+    $order = implode(",", array_keys($cart));
+    // lấy ra các product có id lưu trong cart
+    $cartProduct = $productDAL->getOrder($order);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +46,7 @@ $userDAL = new userDAL();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style_layout.css?id=<?php echo time()?>">
+    <link rel="stylesheet" href="./css/style_layout.css?id=<?php echo time() ?>">
     <link rel="stylesheet" href="./../css/compare.css">
     <link rel="stylesheet" href="./../css/fontawesome-free-6.2.0-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap" rel="stylesheet">
@@ -49,9 +63,9 @@ $userDAL = new userDAL();
             <div class="lg:hidden block">
                 <input type="checkbox" class="nav_mobile_check hidden" id="nav_mobile">
                 <label for="nav_mobile" class="over fixed bg-opacity-20 bg-slate-600 top-0 right-0 bottom-0  left-0 z-10">
-                <label for="nav_mobile">
-                    <i class="fa-solid fa-xmark top-4 right-7 text-4xl absolute"></i>
-                </label>
+                    <label for="nav_mobile">
+                        <i class="fa-solid fa-xmark top-4 right-7 text-4xl absolute"></i>
+                    </label>
                 </label>
                 <div class="nav_mobile1 fixed top-0 left-0 bottom-0 w-80 max-w-full bg-white z-20 -translate-x-80">
                     <div class="relative left-6 mb-5">
@@ -87,7 +101,30 @@ $userDAL = new userDAL();
                 <div class="hover:text-amber-600 flex gap-1 product">
                     <a class="hover:text-amber-600 text-lg lg:mr-1 text-zinc-500 lg:block hidden" href="">GIỎ HÀNG</a>
                     <i class="fa-solid fa-cart-plus lg:text-2xl text-2xl"></i>
-                    <div class="product_box">chưa có sản phẩm trong giỏ hàng</div>
+                    <?php if (isset($cart)) { ?>
+                        <div class="product_box1">
+                            <div class="mb-3">
+                                <?php foreach ($cartProduct as $productCart) : ?>
+
+                                    <div class="flex gap-2 mb-3 border-b-2">
+                                        <img src="<?php echo $productCart['image'] ?>" alt="" width="100">
+                                        <div>
+                                            <h4><?php echo $productCart['name'] ?></h4>
+                                            <div class="flex gap-2 font-extrabold">
+                                                <p><?php echo $cart[$productCart['id']] ?></p>
+                                                <p>*</p>
+                                                <p><?php echo Utils::formatMoney($productCart['price'])  ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <a href="cart.php" class="mt-3 uppercase w-full rounded-md  bg-amber-400  block text-center text-teal-50 py-2">xem giỏ hàng</a>
+                            </div>
+                        </div>
+
+                    <?php } else { ?>
+                        <div class="product_box">chưa có sản phẩm trong giỏ hàng</div>
+                    <?php } ?>
                 </div>
             </div>
         </nav>
@@ -117,41 +154,41 @@ $userDAL = new userDAL();
     </header>
     <!-- content -->
     <div>
-    <!-- đăng ký -->
-    <div class="modal-signup">
-        <div class="modal_container-signup js-modal_container-signup">
-            <div class="modal_content-signup">
-                <div class="notification">
-                    <?php if(isset($failed)){
-                        echo $failed;
-                    }else if(isset($success)){
-                        echo $success;
-                    } ?>
-                </div>
-                <header class="modal_header-signup">
-                    ĐĂNG KÝ
-                </header>
-                <form action="" method="post">
-                    <div class="modal_body-signup">
-
-                        <label for="" class="modal_label-signup">Tên tài khoản hoặc địa chỉ email *</label>
-                        <input required class="modal_input-signup" type="email" name="email" placeholder="Email ...">
-                        <label for="" class="modal_label-signup">Mật khẩu *</label>
-                        <input required class="modal_input-signup" type="password" name="password" placeholder="Mật Khẩu">
-                        <label for="" class="modal_label-signup">Nhập lại mật khẩu *</label>
-                        <input required class="modal_input-signup" type="password" name="password1" placeholder="Mật Khẩu">
-                        <label for="" class="modal_label-signup">Địa Chỉ *</label>
-                        <input required class="modal_input-signup" type="text" name="address" placeholder="Địa Chỉ">
-                        <label for="" class="modal_label-signup">Phone *</label>
-                        <input required class="modal_input-signup" type="text" name="phone" placeholder="Phone">
-                        <button id="signup">ĐĂNG KÝ</button>
-
+        <!-- đăng ký -->
+        <div class="modal-signup">
+            <div class="modal_container-signup js-modal_container-signup">
+                <div class="modal_content-signup">
+                    <div class="notification">
+                        <?php if (isset($failed)) {
+                            echo $failed;
+                        } else if (isset($success)) {
+                            echo $success;
+                        } ?>
                     </div>
-                </form>
+                    <header class="modal_header-signup">
+                        ĐĂNG KÝ
+                    </header>
+                    <form action="" method="post">
+                        <div class="modal_body-signup">
 
+                            <label for="" class="modal_label-signup">Tên tài khoản hoặc địa chỉ email *</label>
+                            <input required class="modal_input-signup" type="email" name="email" placeholder="Email ...">
+                            <label for="" class="modal_label-signup">Mật khẩu *</label>
+                            <input required class="modal_input-signup" type="password" name="password" placeholder="Mật Khẩu">
+                            <label for="" class="modal_label-signup">Nhập lại mật khẩu *</label>
+                            <input required class="modal_input-signup" type="password" name="password1" placeholder="Mật Khẩu">
+                            <label for="" class="modal_label-signup">Địa Chỉ *</label>
+                            <input required class="modal_input-signup" type="text" name="address" placeholder="Địa Chỉ">
+                            <label for="" class="modal_label-signup">Phone *</label>
+                            <input required class="modal_input-signup" type="text" name="phone" placeholder="Phone">
+                            <button id="signup">ĐĂNG KÝ</button>
+
+                        </div>
+                    </form>
+
+                </div>
             </div>
         </div>
-    </div>
     </div>
     <!-- FOOTER -->
     <footer class="footer">
@@ -205,7 +242,7 @@ $userDAL = new userDAL();
         </div>
 
     </footer>
-  
+
 </body>
 <script src="./js/main.js "></script>
 

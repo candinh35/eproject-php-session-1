@@ -118,6 +118,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                 <div class="hover:text-amber-600 flex gap-1 product">
                     <a class="hover:text-amber-600 text-lg lg:mr-1 text-zinc-500 lg:block hidden" href="cart.php">GIỎ HÀNG</a>
                     <i class="fa-solid fa-cart-plus lg:text-2xl text-2xl"></i>
+                    <!-- giỏ hàng -->
                     <?php if (isset($cart)) { ?>
                         <div class="product_box1">
                             <div class="mb-3">
