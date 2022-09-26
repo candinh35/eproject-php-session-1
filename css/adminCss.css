@@ -4,25 +4,31 @@
     align-items: center;
 }
 
+.card-body {
+    width: 100%;
+}
+
+
 /* Index*/
+
 
 /*Login*/
 
-.login{
+.login {
     position: relative;
 }
 
-.login-list{
+.login-list {
     position: absolute;
     width: 180px;
     top: -30px;
     left: -190px;
     padding: 15px;
-    border: 1px solid rgba(0,0,0,0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     display: none;
 }
 
-.open > .login-list{
+.open>.login-list {
     display: block;
 }

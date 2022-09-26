@@ -68,64 +68,76 @@ if (isset($_POST['name'])) {
 
                     </div>
                     <!-- /.card-header -->
+
                     <div class="card-body">
-                        <div class="tab-description p-0">
-                            <!-- description -->
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <table border="1" cellpadding = 10>
+                        <div class="tab-content p-0">
+                            <!-- content -->
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Input Addon</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form action="" method="post">
+                                        <div class="input-group mb-3">
 
-                               
-                                <tr>
-                                    <td>
-                                        <label for="">name</label>
-                                        <input type="name" value="<?php echo $row['name'] ?>" name="name">
-                                    </td>
-                                    <td>
-                                        <label for="">price</label>
-                                        <input type="price" value="<?php echo $row['price'] ?>" name="price">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="file" name="image" value="<?php echo $row['image'] ?>">
+                                            <input type="name" value="<?php echo $row['name'] ?>" name="name" class="form-control">
+                                        </div>
 
-                                    </td>
-                                    <td>
-                                        <label for="">category</label>
-                                        <select name="category_id" value="<?php echo $row['category_id'] ?>">
-                                            <?php foreach ($result as $row1) : ?>
-                                                <option value="<?php echo $row1['id'] ?>" <?php if ($row['category_id'] == $row1['id']) {echo 'selected ="selected"'; } ?>><?php echo $row1['name'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <textarea name="description" id="" cols="80" rows="10"><?php echo $row['description'] ?></textarea>
-                                    </td>
-                                </tr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="text" class="form-control" value="<?php echo $row['price'] ?>" name="price">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">.00</span>
+                                            </div>
+                                        </div>
 
-                                <tr>
-                                    <td colspan="2"><button class="btn btn-dark">add</button>
+                                        <div class="input-group mb-3">
+                                            <input type="file" name="image" class="form-control">
+                                        </div>
 
-                                    </td>
-                                </tr>
-                         </table>
+                                        <div class="input-group">
+                                            <label for="" class="">category</label>
 
-                            </form>
+                                            <select class="form-control" name="category_id" value="<?php echo $row['category_id'] ?>">
+                                                <?php foreach ($result as $row1) : ?>
+                                                    <option value="<?php echo $row1['id'] ?>" <?php if ($row['category_id'] == $row1['id']) {
+                                                                                                    echo 'selected ="selected"';
+                                                                                                } ?>><?php echo $row1['name'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+
+                                        <!-- /input-group -->
+
+                                        <label>description</label>
+                                        <div class="input-group input-group-sm">
+                                            <textarea class="form-control" name="" id="" cols="30" rows="15"><?php echo $row['description'] ?></textarea>
+
+                                        </div> <span class="input-group-append">
+                                            <button type="button" class="btn btn-info btn-flat">Go!</button>
+                                        </span>
+                                    </form>
+                                    <!-- /input-group -->
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </section>
-          
+
+
 
 
         </div>
 
     </div>
-    <!-- /.description-wrapper -->
+    <!-- /.content-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 

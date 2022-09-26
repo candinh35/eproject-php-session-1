@@ -26,7 +26,7 @@ if (isset($_GET['id']) && $_GET['id'] !== null) {
 if (isset($_GET['action'])) {
     if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
         $id = $_GET['id'];
-        $userDAL->deleteOne($id);
+        $categoryDAL->deleteOne($id);
         header('location:list.php');
     }
 }
@@ -54,18 +54,17 @@ if (isset($_GET['action'])) {
 
                     </div>
                     <!-- /.card-header -->
+
                     <div class="card-body">
                         <div class="tab-content p-0">
                             <!-- content -->
-                            <form action="" method="post" class="search">
-                                <label for="">name category</label>
-                                <input type="text" name="name" placeholder="nhap vao ten tim kiem">
-
-                                <button class="btn btn-dark">tim kiem</button>
-
-                            </form>
-                            <table border="1" cellspacing=0 cellpadding=10>
-                        <thead>
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Input Addon</h3>
+                                </div>
+                                <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover w-full mb-3">
+                                <thead>
                             <tr>
                                 <th> id</th>
                                 <th>name</th>
@@ -95,8 +94,8 @@ if (isset($_GET['action'])) {
                                 </td>
                             </tr>
                             </tbody>
-                    </table>
-                    <?php
+                                            </table>
+                                            <?php
                                         $i = 1;
                                         while ($i <= $sotrang) { ?>
                                         <div style="width: 100px; list-style:none; display:inline-block">
@@ -110,13 +109,19 @@ if (isset($_GET['action'])) {
                                             $i++;
                                         }
                             ?>
+                                    <!-- /input-group -->
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </section>
-           
+
+
 
 
         </div>

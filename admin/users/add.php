@@ -5,7 +5,10 @@ $userDAL = new userDAL();
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
-    $userDAL->add($email, $password);
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    
+    $userDAL->add($email, $password,$phone, $address);
 }
 ?>
 <!DOCTYPE html>
@@ -34,19 +37,52 @@ if (isset($_POST['email'])) {
                     <div class="card-body">
                         <div class="tab-content p-0">
                             <!-- content -->
-                            <form action="" method="post">
-                                <div>
-                                    <label for="">Email</label>
-                                </div>
-
-                                <input type="email" placeholder="Email" name="email">
-                                <div>
-                                    <label for="">Password</label>
-                                </div>
-
-                                <input type="password" placeholder="Password" name="password">
-                                <button class="btn btn-dark">add</button>
-                            </form>
+                            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Horizontal Form</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="password">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">phone</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="" placeholder="Phone" name="phone">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">address</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="" placeholder="address" name="address">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                      
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">add</button>
+                 
+                </div>
+                <!-- /.card-footer -->
+              </form>
+            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->

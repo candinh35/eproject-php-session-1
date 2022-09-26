@@ -1,10 +1,18 @@
 <?php
-$dir = str_replace("admin\category", "", __DIR__);
-require_once $dir . 'dals/categoryDAL.php';
-$userDAL = new categoryDAL();
-if (isset($_POST['name'])) {
-    $name = $_POST['name'];
-    $userDAL->add($name);
+$dir = str_replace("admin\users", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/users
+
+require_once $dir . 'dals\logoDAL.php';
+require_once $dir . 'config.php';
+$logoDAL = new logoDAL();
+$result = $logoDAL->getList();
+if(isset($_GET['action']) ){
+$id = $_GET['id'];
+$linkImg = $logoDAL->getOne($id);
+$logoDAL->deleteOne($id);
+if($linkImg){
+    $checked = $dir . $linkImg['logo'];
+    unlink($checked);
+}
 }
 ?>
 <!DOCTYPE html>
@@ -39,13 +47,29 @@ if (isset($_POST['name'])) {
                                     <h3 class="card-title">Input Addon</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post">
-                                        <label for="">name</label>
-                                        <div class="col-sm-10 mb-3">
-                                            <input type="text" class="form-control" id="inputEmail3" placeholder="name" name="name">
-                                        </div>
-                                        <button class="btn btn-info">add</button>
-                                    </form>
+                                <table id="example2" class="table table-bordered table-hover w-full mb-3">
+                                <thead>
+                        <th>id</th>
+                        <th>logo</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach($result as $row): ?>
+                        <tr>
+                            <td><?php echo $row['id']?></td>
+                            <td><img src=" <?php echo BASE_URL . $row['logo']?>" alt="" width="150"></td>
+                            <td>
+                                <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id']?>">xoa</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td>
+                                <a href="addLogo.php">them</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                                            </table>
+                                            
                                     <!-- /input-group -->
                                 </div>
                                 <!-- /.card-body -->

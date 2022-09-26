@@ -43,7 +43,7 @@ if (isset($_POST['name'])) {
                 <div class="card content1">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i> User
+                            <i class="fas fa-chart-pie mr-1"></i> Product
                         </h3>
 
                     </div>
@@ -51,53 +51,46 @@ if (isset($_POST['name'])) {
                     <div class="card-body">
                         <div class="tab-description p-0">
                             <!-- description -->
-                            <form action="" method="post" enctype="multipart/form-data">
-                        <table border="1" cellpadding= "20" cellspacing = 0>
-                            <tr>
-                                <td>
-                                    <label for="">name</label>
-                        <input type="name" placeholder="name" name="name">
-                                </td>
-                                <td>
-                                    <label for="">price</label>
-                        <input type="price" placeholder="price" name="price">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                     <input type="file" name="image">
-                        
-                                </td>
-                                <td>
-                                    <label for="">category</label>
-                        <select name="category_id">
-                            <?php foreach ($result as $row) : ?>
-                                <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <div>
-                                        <label for="">mô tả</label>
+                            <form action="" method="post">
+                                    <div class="input-group mb-3">
+                                       
+                                        <input type="name" placeholder="name" name="name" class="form-control">
                                     </div>
-                                    
-                                <textarea name="description" id="" cols="90" rows="10"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <button class="btn btn-dark">add</button>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        
-                       
-                        
-                        
-                    </form>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="price" name="price">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="file" name="image" class="form-control">
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="" class="">category</label>
+
+                                        <select class="form-control" name="category_id" value="<?php echo $row['category_id'] ?>">
+                                            <?php foreach ($result as $row1) : ?>
+                                                <option value="<?php echo $row1['id'] ?>"><?php echo $row1['name'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <!-- /input-group -->
+
+                                    <label>description</label>
+                                    <div class="input-group input-group-sm">
+                                        <textarea class="form-control" name="description" id="" cols="30" rows="15"></textarea>
+
+                                    </div> <span class="input-group-append">
+                                        <button type="button" class="btn btn-info btn-flat">Go!</button>
+                                    </span>
+                                </form>
                         </div>
                     </div>
                     <!-- /.card-body -->

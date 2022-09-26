@@ -666,4 +666,14 @@
     .footer_list-info {
         margin-top: 30px;
     }
+    .product-description {
+        padding: 0;
+    }
+    .product-image {
+        margin-left: 0;
+    }
+    .product-image img {
+        padding-left: 0;
+        width: 98%;
+    }
 }

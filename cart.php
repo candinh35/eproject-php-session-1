@@ -5,6 +5,7 @@ require_once 'dals/logoDAL.php';
 require_once 'Utils.php';
 $productDAL = new productDAL();
 
+
 //lấy dữ liệu gửi lên từ submit
 
 if (isset($_GET['action'])) {
@@ -19,9 +20,10 @@ if (isset($_GET['action'])) {
                 header('location:cart.php');
             } else {
                 // kiểm tra xem đã có id của product trong giỏ hàng chưa
+                $flag = true;
                 if (isset($_SESSION['cart'])) {
                     $cart =  array_keys($_SESSION['cart']);
-                    $flag = true;
+                    
                     foreach ($cart as $cartId) {
                         if ($cartId == $id) {
                             $flag = false;
@@ -56,13 +58,25 @@ if (isset($_GET['action'])) {
         case "submit":
             updateCart();
             break;
+        case "pay":
+            if (isset($_SESSION['cart'])) {
+            $cart = $_SESSION['cart'];
+            $order = implode(",", array_keys($cart));
+            // lấy ra các product có id lưu trong cart
+            $result = $productDAL->getOrder($order);
+            
+            $total = 0;
+            while($row = mysqli_fetch_assoc($result)){
+                $total += ($row['price'] * $cart[$row['id']]);
+                echo $total. '<br/>';
+            }
+            };
     }
 }
 
 // kiểm tra sự tồn tại của session cart
 if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
     $cart = $_SESSION['cart'];
-    $order = array();
     $order = implode(",", array_keys($cart));
     // lấy ra các product có id lưu trong cart
     $result = $productDAL->getOrder($order);
@@ -192,7 +206,7 @@ $totally = 0;
     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
         <?php if (isset($cart)) { ?>
 
-            <div class="flex gap-5 justify-between">
+            <div class="lg:flex gap-5 block justify-between">
                 <form action="cart.php?action=submit" method="post">
                     <div class="product_order border-r-2 pr-10">
 
@@ -211,7 +225,7 @@ $totally = 0;
                                         <td class="flex justify-items-start items-center gap-3 w-96">
                                             <!-- xóa sản phẩm -->
                                             <a href="?action=delete&id=<?php echo $row['id'] ?>"><i class="fa-regular fa-circle-xmark"></i></a>
-                                            <img src="<?php echo $row['image'] ?>" alt="" width="130">
+                                            <img src="<?php echo $row['image'] ?>" alt="" class="lg:w-32 w-16">
                                             <?php echo $row['name'] ?>
                                         </td>
                                         <td class="font-bold"><?php echo Utils::formatMoney($row['price'])  ?></td>
@@ -232,14 +246,14 @@ $totally = 0;
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                        <div class="flex gap-4">
-                            <a href="index.php" class="hover:bg-gray-800 text-black border-2 px-10 py-2 hover:text-white uppercase ">Tiếp tục xem sản phẩm</a>
-                            <input class="bg-gray-800 px-10 py-2 text-white uppercase cursor-pointer" type="submit" name="update_click" value="Cập Nhật">
+                        <div class="flex  gap-4">
+                            <a href="index.php" class="hover:bg-gray-800 text-black border-2 lg:px-10 px-4 py-2 hover:text-white uppercase ">Tiếp tục xem sản phẩm</a>
+                            <input class="bg-gray-800 lg:px-10 px-4 py-2 text-white uppercase cursor-pointer" type="submit" name="update_click" value="Cập Nhật">
                         </div>
 
                     </div>
                 </form>
-                <div class="order w-4/12">
+                <div class="lg:mt-0 mt-10 lg:w-4/12 w-full">
 
                     <h3 class="text-xl uppercase font-medium">tổng số lượng</h3>
                     <div class="flex justify-between border-b-2 pb-4 pt-6">
@@ -255,7 +269,7 @@ $totally = 0;
                         <p class="font-bold"><?php echo Utils::formatMoney($totally) ?></p>
                     </div>
                     <div class="mt-6">
-                        <a href="" class="bg-gray-800 text-black border-2 px-10 py-2 text-white uppercase ">Tiến hành thanh toán</a>
+                        <a href="?action=pay" class="bg-gray-800 border-2 px-10 py-2 text-white uppercase ">Tiến hành thanh toán</a>
                     </div>
                 </div>
             </div>

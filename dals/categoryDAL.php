@@ -34,7 +34,8 @@ class categoryDAL extends DB {
 
     function edit( $id,$name){
         $sql = "UPDATE `category` SET `name`='$name' WHERE id=$id";
-        mysqli_query($this->connect,$sql);
+        return mysqli_query($this->connect,$sql);
+
     }
     function paging($id){
         $location = ($id-1)*10;

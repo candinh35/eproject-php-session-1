@@ -205,8 +205,8 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                         <a class="product_link" href="">
                             <i class="absolute -bottom-4 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
                         </a>
-                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
-                            <P class="text-xs opacity-60"><?php echo $row['name']; ?></P>
+                        <div class="lg:mt-0 mt-2   mx-auto text-center">
+                            <P class="text-xs opacity-60 uppercase"><?php echo $category['name']; ?></P>
                             <a class="link_sofa" href="detail.php?<?php echo $row['id'] ?>">
                                 <h4><?php echo $row['name']; ?></h4>
                             </a>
@@ -263,8 +263,8 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                         <a class="product_link" href="">
                             <i class="absolute -bottom-4 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
                         </a>
-                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
-                            <P class="text-xs opacity-60"><?php echo $row['name']; ?></P>
+                        <div class=" lg:mt-0 mt-2   mx-auto text-center">
+                            <P class="text-xs opacity-60 uppercase"><?php echo $category['name']; ?></P>
                             <a class="link_sofa" href="detail.php?id=<?php echo $row['id'] ?>">
                                 <h4><?php echo $row['name']; ?></h4>
                             </a>
@@ -303,21 +303,21 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
             <div class="grid lg:grid-cols-4 grid-cols-2 lg:gap-3 gap-2 ml-5">
 
                 <?php foreach ($productList as $row) : ?>
-                    <div class="product_item">
+                    <di v class="product_item">
                         <a href="detail.php?id=<?php echo $row['id'] ?>">
                             <img src="<?php echo BASE_URL . $row['image']; ?>" width="300" class="product_sofa">
                         </a>
                         <a class="product_link" href="">
                             <i class="absolute -bottom-4 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
                         </a>
-                        <div class="w-36 lg:mt-0 mt-2   mx-auto text-center">
-                            <P class="text-xs opacity-60"><?php echo $row['name']; ?></P>
+                        <div class=" lg:mt-0 mt-2   mx-auto text-center">
+                            <P class="text-xs opacity-60 uppercase"><?php echo $category['name']; ?></P>
                             <a class="link_sofa" href="detail.php?id=<?php echo $row['id'] ?>">
                                 <h4><?php echo $row['name']; ?></h4>
                             </a>
                             <strong><?php echo Utils::formatMoney($row['price']); ?></strong>
                         </div>
-                    </div>
+                    </di>
         <?php
                                             endforeach;
                                         }

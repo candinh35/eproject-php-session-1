@@ -53,32 +53,34 @@ $row = $userDAL->getOne($id);
                         <div class="tab-content p-0">
                             <!-- content -->
                             <?php
-                    if (isset($_SESSION['add-status'])) {
-                        if ($_SESSION['add-status']['success'] == 1) {
-                            echo '<div class="alert alert-success" role="alert">
+                            if (isset($_SESSION['add-status'])) {
+                                if ($_SESSION['add-status']['success'] == 1) {
+                                    echo '<div class="alert alert-success" role="alert">
                     ' . $_SESSION['add-status']['message'] . '
                   </div>';
-                        } else {
-                            echo '<div class="alert alert-danger" role="alert">
+                                } else {
+                                    echo '<div class="alert alert-danger" role="alert">
                     ' . $_SESSION['add-status']['message'] . '
                   </div>';
-                        }
-                        unset($_SESSION['add-status']);
-                    }
-                    ?>
-                    <form action="" method="post">
-                        <label for="">name</label>
-                        <input type="name" value="<?php echo $row['name'] ?>" name="name">
-                        <label for="">Password</label>
-                        <button class="btn btn-dark">edit</button>
-                    </form>
+                                }
+                                unset($_SESSION['add-status']);
+                            }
+                            ?>
+                            <form action="" method="post">
+                                <label for="">name</label>
+                                <div class="col-sm-10 mb-3">
+                                    <input type="text" class="form-control" id="inputEmail3" value="<?php echo $row['name'] ?>" name="name">
+                                </div>
+                                <button class="btn btn-info">edit</button>
+
+                            </form>
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </section>
-           
+
 
 
         </div>

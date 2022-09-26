@@ -60,16 +60,12 @@ if (isset($_GET['action'])) {
                 <div class="card content1">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i> product
+                            <i class="fas fa-chart-pie mr-1"></i> Product
                         </h3>
 
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="tab-description p-0">
-                            <!-- description -->
-   
-                            <form action="" method="post" class="search">
+                    <form action="" method="post" class="search">
                                 <label for="">min</label>
                                 <input type="text" name="min" placeholder="nhap vao gia tim kiem">
                                 <label for="">max</label>
@@ -78,8 +74,19 @@ if (isset($_GET['action'])) {
                                 <button class="btn btn-dark">tim kiem</button>
 
                             </form>
-                            <table border="1px" cellspacing=0 cellpadding=10>
-                                <thead>
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <!-- content -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">DataTable List Product</h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <table id="example2" class="table table-bordered table-hover w-full">
+                                            <thead>
                                     <tr>
                                         <th> id</th>
                                         <th>name</th>
@@ -125,7 +132,11 @@ if (isset($_GET['action'])) {
                                         </td>
                                     </tr>
                                     </tbody>
-                            </table>  <?php
+                                            </table>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <?php
                                         $i = 1;
                                         while ($i <= $sotrang) { ?>
                                         <div style="width: 100px; list-style:none; display:inline-block">
@@ -139,16 +150,24 @@ if (isset($_GET['action'])) {
                                             $i++;
                                         }
                             ?>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </section>
+
+
+
+
         </div>
 
     </div>
-    <!-- /.description-wrapper -->
+    <!-- /.content-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 

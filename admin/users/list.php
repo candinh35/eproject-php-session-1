@@ -39,91 +39,110 @@ if (isset($_GET['action'])) {
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-    <?php require_once $dir . 'admin/commons/nav.php' ?>
-                    <div class="row">
-                        <!-- Left col -->
-                        <section class="col-lg-12 connectedSortable">
-                            <!-- Custom tabs (Charts with tabs)-->
-                            <div class="card content1">
-                                <div class="card-header">
-                                    <h3 class="card-title">
-                                        <i class="fas fa-chart-pie mr-1"></i> User
-                                    </h3>
-                                   
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <div class="tab-content p-0">
-                                        <!-- content -->
-                                        <form action="" method="post" class="search">
-                                <label for="">name user</label>
-                                <input type="text" name="name" placeholder="nhap vao ten tim kiem">
+        <?php require_once $dir . 'admin/commons/nav.php' ?>
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card content1">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i> User
+                        </h3>
 
-                                <button class="btn btn-dark">tim kiem</button>
-
-                            </form>
-                                        <table border="1" cellspacing=0 cellpadding=10>
-                        <thead>
-                            <tr>
-                                <th> id</th>
-                                <th>email</th>
-                                <th> password</th>
-                            </tr>
-                        </thead>
-                        <?php
-                        foreach ($result as $row) :
-                        ?>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <?php echo $row['id']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['email']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['password']; ?>
-                                    </td>
-                                    <td>
-                                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>
-                                        <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id']; ?>">xóa</a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                            <tr>
-                                <td>
-                                    <a href="add.php">thêm</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                    </table>
-                    <?php
-                                        $i = 1;
-                                        while ($i <= $sotrang) { ?>
-                                        <div style="width: 100px; list-style:none; display:inline-block">
-                                             <li class="page-item <?php if (!$id) {
-                                                            $id = 1;
-                                                        }
-                                                        echo ($id == $i) ? 'active' : ''; ?>"><a style="text-align: center;" class="page-link" href="<?php $dir . 'admin/product/list.php' ?>?id=<?php echo $i ?>"><?php echo $i ?></a></li>
-                                        </div>
-                               
-                            <?php
-                                            $i++;
-                                        }
-                            ?>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </section>
-                      
-                       
                     </div>
-            
+                    <!-- /.card-header -->
+                    <form action="" method="post" class="search">
+                        <label for="">min</label>
+                        <input type="text" name="min" placeholder="nhap vao gia tim kiem">
+                        <label for="">max</label>
+                        <input type="text" name="max" placeholder="nhap vao gia tim kiem">
+
+                        <button class="btn btn-dark">tim kiem</button>
+
+                    </form>
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <!-- content -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">DataTable List User</h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <table id="example2" class="table table-bordered table-hover w-full">
+                                                <thead>
+                                                    <tr>
+                                                        <th> id</th>
+                                                        <th>email</th>
+                                                        <th> password</th>
+                                                    </tr>
+                                                </thead>
+                                                <?php
+                                                foreach ($result as $row) :
+                                                ?>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $row['id']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['email']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['password']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>
+                                                                <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id']; ?>">xóa</a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="add.php">thêm</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <?php
+                                    $i = 1;
+                                    while ($i <= $sotrang) { ?>
+                                        <div style="width: 100px; list-style:none; display:inline-block">
+                                            <li class="page-item <?php if (!$id) {
+                                                                        $id = 1;
+                                                                    }
+                                                                    echo ($id == $i) ? 'active' : ''; ?>"><a style="text-align: center;" class="page-link" href="<?php $dir . 'admin/product/list.php' ?>?id=<?php echo $i ?>"><?php echo $i ?></a></li>
+                                        </div>
+
+                                    <?php
+                                        $i++;
+                                    }
+                                    ?>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </section>
+
+
+
+
         </div>
-        <!-- /.content-wrapper -->
-        <?php require_once $dir . 'admin/commons/footer.php' ?>
+
+    </div>
+    <!-- /.content-wrapper -->
+    <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 
 </html>
