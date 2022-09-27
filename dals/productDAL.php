@@ -37,7 +37,7 @@ class productDAL extends DB
     function add($name, $price, $image, $description, $category_id)
     {
         $sql = "INSERT INTO products (name,price,description,image,category_id) value ('$name', $price,'$description','$image',$category_id) ";
-        mysqli_query($this->connect, $sql);
+        return mysqli_query($this->connect, $sql);
     }
 
     function edit($id, $name, $price, $description, $image, $category_id)
@@ -54,7 +54,7 @@ class productDAL extends DB
 
     function getListByIdCategory($category_id)
     {
-        $sql = "SELECT * FROM products WHERE category_id = $category_id";
+        $sql = "SELECT * FROM products WHERE category_id = $category_id LIMIT 0,8";
         $result = mysqli_query($this->connect, $sql);
         echo mysqli_error($this->connect);
         return $result;

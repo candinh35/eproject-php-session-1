@@ -2,6 +2,13 @@
 session_start();
 $dir = str_replace("admin\users", "", __DIR__);
 require_once $dir . 'dals/userDAL.php';
+
+// kiểm tra đăng nhập
+
+if(!isset($_SESSION['loginAdmin'])){
+  header('location:login.php');
+}
+
 $userDAL = new userDAL();
 if ($_GET['id'] && !is_numeric($_GET['id'])) {
     header('Location:list.php');

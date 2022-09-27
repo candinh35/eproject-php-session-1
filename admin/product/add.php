@@ -22,7 +22,19 @@ if (isset($_POST['name'])) {
         move_uploaded_file($imgTmp, $image);
         $upImage = $relativeDir . '/' . $imgName;
     }
-    $productDAL->add($name, $price, $upImage, $description, $category_id);
+    $checked = $productDAL->add($name, $price, $upImage, $description, $category_id);
+    if ($checked) {
+        //flash session
+        $_SESSION['add-status'] = [
+            'success' => 1,
+            'message' => 'Edit successfully'
+        ];
+    } else {
+        $_SESSION['add-status'] = [
+            'success' => 0,
+            'message' => 'Edit failed'
+        ];
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -51,53 +63,80 @@ if (isset($_POST['name'])) {
                     <div class="card-body">
                         <div class="tab-description p-0">
                             <!-- description -->
-                            <form action="" method="post">
-                                    <div class="input-group mb-3">
-                                       
-                                        <input type="name" placeholder="name" name="name" class="form-control">
+                            <?php
+                            if (isset($_SESSION['add-status'])) {
+                                if ($_SESSION['add-status']['success'] == 1) {
+                                    echo '<div class="alert alert-success" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                } else {
+                                    echo '<div class="alert alert-danger" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                }
+                                unset($_SESSION['add-status']);
+                            }
+                            ?>
+                           
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="input-group mb-3">
+                                    <label for="" class="">Name</label>
+                                </div>
+                                <div class="input-group mb-3">
+
+                                    <input type="name" placeholder="name" name="name" class="form-control">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="" class="">Price</label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
                                     </div>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">$</span>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="price" name="price">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">.00</span>
-                                        </div>
+                                    <input type="text" class="form-control" placeholder="price" name="price">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">.00</span>
                                     </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="" class="">image</label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="file" name="image" class="form-control">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="" class="">category</label>
+                                </div>
+                                <div class="input-group mb-3">
 
-                                    <div class="input-group mb-3">
-                                        <input type="file" name="image" class="form-control">
-                                    </div>
 
-                                    <div class="input-group">
-                                        <label for="" class="">category</label>
+                                    <select class="form-control" name="category_id" value="<?php echo $row['category_id'] ?>">
+                                        <?php foreach ($result as $row1) : ?>
+                                            <option value="<?php echo $row1['id'] ?>"><?php echo $row1['name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
 
-                                        <select class="form-control" name="category_id" value="<?php echo $row['category_id'] ?>">
-                                            <?php foreach ($result as $row1) : ?>
-                                                <option value="<?php echo $row1['id'] ?>"><?php echo $row1['name'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
+                                <!-- /input-group -->
 
-                                    <!-- /input-group -->
+                                <div class="input-group mb-3">
+                                    <label for="" class="">description</label>
+                                </div>
+                                <div class="input-group input-group-sm">
+                                    <textarea class="form-control" name="description" id="" cols="30" rows="15"></textarea>
 
-                                    <label>description</label>
-                                    <div class="input-group input-group-sm">
-                                        <textarea class="form-control" name="description" id="" cols="30" rows="15"></textarea>
-
-                                    </div> <span class="input-group-append">
-                                        <button type="button" class="btn btn-info btn-flat">Go!</button>
-                                    </span>
-                                </form>
+                                </div> 
+                                <span class="input-group-append mt-3">
+                                    <button  class="btn btn-info btn-flat">add</button>
+                                </span>
+                            </form>
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </section>
-  
+
         </div>
 
     </div>

@@ -21,6 +21,12 @@ class categoryDAL extends DB {
         $row = mysqli_fetch_assoc($result);
         return $row;
     }
+    function getByPosition($position){
+        $sql = "SELECT * FROM category WHERE position = $position";
+        $result = mysqli_query($this->connect, $sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    }
 
     function deleteOne($id){
         $sql = "DELETE FROM category WHERE id=$id";
@@ -29,7 +35,7 @@ class categoryDAL extends DB {
 
     function add ($name){
         $sql = "INSERT INTO category (name) value ('$name') ";
-        mysqli_query($this->connect, $sql);
+        return mysqli_query($this->connect, $sql);
     }
 
     function edit( $id,$name){

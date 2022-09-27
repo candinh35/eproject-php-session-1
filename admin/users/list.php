@@ -1,6 +1,13 @@
-<?php $dir = str_replace("admin\users", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/users 
+<?php 
+session_start();
+$dir = str_replace("admin\users", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/users 
 require_once $dir . 'dals/userDAL.php';
 
+// kiểm tra đăng nhập
+
+if(!isset($_SESSION['loginAdmin'])){
+    header('location:login.php');
+}
 $userDAL = new userDAL();
 $resultNum = $userDAL->getList();
 // trả về số sản phẩm có trong giỏ hàng
@@ -28,6 +35,8 @@ if (isset($_GET['action'])) {
         header('location:list.php');
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,10 +62,8 @@ if (isset($_GET['action'])) {
                     </div>
                     <!-- /.card-header -->
                     <form action="" method="post" class="search">
-                        <label for="">min</label>
-                        <input type="text" name="min" placeholder="nhap vao gia tim kiem">
-                        <label for="">max</label>
-                        <input type="text" name="max" placeholder="nhap vao gia tim kiem">
+                        <label for="">nhập số điện thoại</label>
+                        <input type="text" name="min" placeholder="nhap vao số điện thoại tim kiem" class="form-control mb-3">
 
                         <button class="btn btn-dark">tim kiem</button>
 
@@ -78,6 +85,8 @@ if (isset($_GET['action'])) {
                                                         <th> id</th>
                                                         <th>email</th>
                                                         <th> password</th>
+                                                        <th> phone</th>
+                                                        <th> address</th>
                                                     </tr>
                                                 </thead>
                                                 <?php
@@ -93,6 +102,12 @@ if (isset($_GET['action'])) {
                                                             </td>
                                                             <td>
                                                                 <?php echo $row['password']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['phone']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['address']; ?>
                                                             </td>
                                                             <td>
                                                                 <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>

@@ -619,6 +619,209 @@
     text-decoration: none;
 }
 
+.home {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.home:hover {
+    color: #d09f11;
+}
+
+.select {
+    margin-left: 30px;
+    width: 283px;
+    height: 39px;
+    padding: 0 10px;
+    outline: none;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.input-category {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    width: 265px;
+    height: 39px;
+    padding: 0 10px;
+}
+
+.input-category_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 39px;
+    background-color: #d09f11;
+}
+
+.category_link {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.category_link:hover {
+    color: #d09f11;
+}
+
+.product-title {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.product-title:hover {
+    color: #d09f11;
+}
+
+.product-sofa-table-tivi {
+    width: 75%;
+}
+
+
+/* contact */
+
+.content {
+    background-image: url(./../img/contact.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.content_1 {
+    width: 45%;
+    height: 500px;
+    background-color: rgba(186, 152, 64, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content_1-text {
+    width: 467px;
+    height: 256px;
+}
+
+.content_2 {
+    background-color: #fff;
+    width: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact {
+    width: 563px;
+}
+
+.input-contact {
+    width: 100%;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 14px;
+    padding: 7px;
+}
+
+.input-content {
+    width: 100%;
+    height: 100px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 14px;
+}
+
+.button-contect {
+    width: 62px;
+    height: 35px;
+    align-items: flex-start;
+    background-color: #2d2d2d;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: #000000 0px 0px 0px 0px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 13.7643px;
+    font-weight: 700;
+    letter-spacing: 0.412929px;
+    line-height: 33.0343px;
+    padding: 0px 16.5172px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* introduce */
+
+.icon-inner {
+    margin-left: 45%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    border: 2px solid #e2ba48;
+    font-size: 28px;
+}
+
+.icon-inner:hover {
+    background-color: #e2ba48;
+    color: aliceblue;
+}
+
+.button {
+    width: 96px;
+    height: 31px;
+    background-color: #2d2d2d;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.36px;
+    line-height: 28.8px;
+    margin: 0px 0px 12px;
+    padding: 0px 14.4px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.button:hover {
+    background-color: #e2ba48;
+    color: #ffffff;
+    border-color: #e2ba48;
+}
+
+.text_content {
+    height: 250px;
+}
+
+@media (max-width: 740px) {
+    .content_1 {
+        width: 100%;
+        padding: 9px;
+    }
+    .content_2 {
+        width: 100%;
+    }
+    .contact {
+        width: 95%;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 1113px) {
+    .product-sofa-table-tivi {
+        width: 100%;
+    }
+    .select {
+        width: 111%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
 @media (max-width: 740px) {
     .banner {
         height: 330px;
