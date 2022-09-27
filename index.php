@@ -185,7 +185,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                             <img src="<?php echo BASE_URL . $row['image']; ?>" width="300" class="product_sofa">
                         </a>
                         <a class="product_link" href="detail.php?id=<?php echo $row['id'] ?>">
-                            <i class="absolute -bottom-4 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
+                            <i class="absolute bottom-3 left-8 fa-solid fa-cart-plus lg:text-2xl lg:block hidden"></i>
                         </a>
                         <div class=" lg:mt-0 mt-2   mx-auto text-center">
                             <P class="text-xs opacity-60 uppercase"><?php echo $category['name'];?></P>

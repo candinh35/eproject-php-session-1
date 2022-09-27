@@ -2,9 +2,10 @@
 session_start();
 require_once 'dals/productDAL.php';
 require_once 'dals/logoDAL.php';
+require_once 'dals/OrderDAL.php';
 require_once 'Utils.php';
 $productDAL = new productDAL();
-
+$orderDAL = new OrderDAL();
 
 //lấy dữ liệu gửi lên từ submit
 
@@ -23,7 +24,7 @@ if (isset($_GET['action'])) {
                 $flag = true;
                 if (isset($_SESSION['cart'])) {
                     $cart =  array_keys($_SESSION['cart']);
-                    
+
                     foreach ($cart as $cartId) {
                         if ($cartId == $id) {
                             $flag = false;
@@ -59,18 +60,54 @@ if (isset($_GET['action'])) {
             updateCart();
             break;
         case "pay":
-            if (isset($_SESSION['cart'])) {
-            $cart = $_SESSION['cart'];
-            $order = implode(",", array_keys($cart));
-            // lấy ra các product có id lưu trong cart
-            $result = $productDAL->getOrder($order);
-            
-            $total = 0;
-            while($row = mysqli_fetch_assoc($result)){
-                $total += ($row['price'] * $cart[$row['id']]);
-                echo $total. '<br/>';
+            if (isset($_SESSION['login'])) {
+                $user_id = $_SESSION['login'][0];
+                $date = date("y-m-d");
+                $status = 1;
+
+                $cart = $_SESSION['cart'];
+                $order = implode(",", array_keys($cart));
+                // lấy ra các product có id lưu trong cart
+                $result = $productDAL->getOrder($order);
+                $subTotal = 0;
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $subTotal += ($row['price'] * $cart[$row['id']]);
+                };
+                $tax = 10;
+                $total = $subTotal + ($subTotal * ($tax / 100));
+                $order_id = $orderDAL->makeOrder($date, $status, $subTotal, $tax, $total, $user_id);
+                //  add vào order_detail
+                $insertOrder = "";
+                $count =  mysqli_num_rows($result);
+                $sub_total = 0;
+                foreach($result as $key => $orderItem){
+                    $sub_total = ($orderItem['price'] * $cart[$orderItem['id']]) ;
+                    $insertOrder .= "(".$orderItem['id'].",".$order_id.",".$orderItem['price'].",".$cart[$orderItem['id']].",".$sub_total.")";
+                   if($key != $count -1 ){
+                    $insertOrder .= ",";
+                   }
+                };
+                // var_dump($insertOrder);exit;
+
+                // lưu vào table order_detail
+                $orderDAL->makeOrderDetail($insertOrder);
+
+                // thông báo 
+                if ($order_id) {
+                    //flash session
+                    $_SESSION['add-status'] = [
+                        'success' => 1,
+                        'message' => 'Bạn đã đặt hàng thành công'
+                    ];
+                } else {
+                    $_SESSION['add-status'] = [
+                        'success' => 0,
+                        'message' => 'Dẫ có lỗi sảy ra vui lòng quý khách đợi một chút'
+                    ];
+                }
+            } else {
+                $failed = "Vui lòng đăng nhập để đặt hàng ";
             }
-            };
     }
 }
 
@@ -105,8 +142,25 @@ $totally = 0;
 
 <body>
     <header class="header ">
-    <?php require_once "path/header.php" ?>
+        <?php require_once "path/header.php" ?>
     </header>
+    <h3 class="text-red-500 text-center text-2xl"><?php if (isset($failed)) {
+                                                        echo $failed;
+                                                    } ?></h3>
+    <?php
+    if (isset($_SESSION['add-status'])) {
+        if ($_SESSION['add-status']['success'] == 1) {
+            echo '<div class="text-2xl text-center text-green-500" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+        } else {
+            echo '<div class="ext-2xl text-center text-red-500" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+        }
+        unset($_SESSION['add-status']);
+    }
+    ?>
     <!-- content -->
     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
         <?php if (isset($cart)) { ?>
@@ -192,7 +246,7 @@ $totally = 0;
 
     <!-- FOOTER -->
     <footer class="footer">
-    <?php require_once "path/footer.php" ?>
+        <?php require_once "path/footer.php" ?>
 
     </footer>
 
