@@ -30,7 +30,7 @@ $userDAL = new userDAL();
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
                 <!-- Custom tabs (Charts with tabs)-->
-                <div class="card content1">
+                <div class="card content1 loginAdmin">
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i> Admin
