@@ -52,7 +52,7 @@ $r = mysqli_fetch_assoc($logoList);
    <div>
    <div class="modal">
         <div class="modal_container js-modal_container">
-            <div class="modal_content">
+            <div class="modal_content lg:w-full w-64">
                 <div class="notification">
                     <?php if(isset($success)){
                     echo $success;
@@ -72,11 +72,14 @@ $r = mysqli_fetch_assoc($logoList);
                         <label for="" class="modal_label">Mật khẩu *</label>
                         <input required class="modal_input" type="password" placeholder="Mật Khẩu" name="password">
                         <button id="login">ĐĂNG NHẬP</button>
-                        <input type="checkbox" class="modal_check">
-                        <label for="">Ghi nhớ mật khẩu</label>
+                        <div class="lg:inline hidden mt-3">
+                            <input type="checkbox" class="modal_check">
+                            <label for="">Ghi nhớ mật khẩu</label>
+                        </div>
+                        
 
                     </div>
-                    <footer class="flex justify-between">
+                    <footer class="lg:flex block justify-between">
                         <a class="modal_footer" href="">Quên mật khẩu?</a>
                         <a href="signup.php" class="modal_signup">Bạn chưa có tài khoản ?</a>
                 </form>

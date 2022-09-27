@@ -117,6 +117,8 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                             </div>
                             <div class="product-count">
                                 <label for="size" class="mb-4">Số lượng</label>
+
+                                <!-- gủi thông tin quantity  -->
                                 <form action="cart.php?action=add" class="mt-4" method="post">
                                     <div class="flex flex-row">
                                         <input class="qtyminus" value="-" type="button">

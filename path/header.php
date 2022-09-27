@@ -1,4 +1,4 @@
-<header class="header ">
+
         <nav class="flex justify-between items-center bg-zinc-100 h-24">
             <label for="nav_mobile" class="lg:hidden block text-2xl ml-7 mr-16 menu">
                 <i class="fa-solid fa-bars"></i>
@@ -104,4 +104,3 @@
             </div>
             
         </div>
-    </header>

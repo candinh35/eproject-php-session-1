@@ -18,3 +18,26 @@ qtyminus.addEventListener('click', function() {
         i = 1
     }
 })
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const header = document.querySelector('.header')
+        //Truy xuất div menu
+    var trangthai = "300";
+    window.addEventListener("scroll", function() {
+        var x = pageYOffset;
+        if (x > 300) {
+            if (trangthai == "300") {
+                trangthai = "301";
+                header.classList.add('open');
+            }
+        } else {
+            if (trangthai == "301") {
+                header.classList.remove('open');
+                trangthai = "300";
+            }
+        }
+
+    })
+})

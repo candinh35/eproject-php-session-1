@@ -59,7 +59,7 @@ $r = mysqli_fetch_assoc($logoList);
         <!-- đăng ký -->
         <div class="modal-signup">
             <div class="modal_container-signup js-modal_container-signup">
-                <div class="modal_content-signup">
+                <div class="modal_content-signup  lg:w-full w-64">
                     <div class="notification">
                         <?php if (isset($failed)) {
                             echo $failed;

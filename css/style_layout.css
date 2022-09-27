@@ -3,7 +3,7 @@
     list-style: none;
 }
 
-.header.open {
+.js-header.open {
     position: fixed;
     top: 0;
     width: 100%;
@@ -358,14 +358,12 @@
 .modal {
     margin: 50px 0;
     display: flex;
-    border: 1px solid;
     align-items: center;
     justify-content: center;
     transition: all linear 0.3s;
 }
 
 .modal_container {
-    width: 875px;
     height: 371px;
     background-color: #fff;
     display: flex;
@@ -377,7 +375,6 @@
 
 .modal_header {
     width: 835px;
-    height: 24px;
     color: #1c1c1c;
     font-size: 25px;
     font-weight: 500;
@@ -462,7 +459,6 @@
     align-items: center;
     justify-content: center;
     transition: all linear 0.3s;
-    border: 1px solid;
 }
 
 .modal_container-signup {
@@ -480,7 +476,6 @@
 
 .modal_header-signup {
     width: 835px;
-    height: 24px;
     color: #1c1c1c;
     font-size: 25px;
     font-weight: 500;
@@ -861,7 +856,7 @@
     .footer_list {
         width: 100%;
         border-right: none;
-        padding-left: 50px;
+        padding-left: 35px;
     }
     .button_footer {
         margin-left: 30%;
@@ -878,5 +873,9 @@
     .product-image img {
         padding-left: 0;
         width: 98%;
+    }
+    .modal_header,
+    .modal_header-signup {
+        width: 235px;
     }
 }
