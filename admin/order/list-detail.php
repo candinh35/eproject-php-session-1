@@ -1,21 +1,19 @@
 <?php
 session_start();
 $dir = str_replace("admin\order", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/orders 
-require_once $dir . 'dals/orderDAL.php';
 require_once $dir . 'dals/orderDetailDAL.php';
 
-
-
 $orderDetail = new orderDetailDAL();
-$orderDAL = new orderDAL();
-$resultNum = $orderDAL->getList();
+$resultNum = $orderDetail->getList();
 
 // kiểm tra đăng nhập
 
 if (!isset($_SESSION['loginAdmin'])) {
     header('location:login.php');
 }
-// trả về số sản phẩm có table
+
+
+// trả về số sản phẩm có trong giỏ hàng
 $number = mysqli_num_rows($resultNum);
 
 //  hàm ceil là làm trò lên 
@@ -28,17 +26,19 @@ if (isset($_POST['name']) && $_POST['name'] != null) {
     if (isset($_GET['id']) && $_GET['id'] !== null) {
         $id = $_GET['id'];
         // truyên id sang để lấy vè số bản ghi tương ứng
-        $result = $orderDAL->paging($id);
+        $result = $orderDetail->paging($id);
     } else {
         $id = 1;
-        $result = $orderDAL->paging($id);
+        $result = $orderDetail->paging($id);
     }
 }
+
+
 if (isset($_GET['action'])) {
     if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
         $id = $_GET['id'];
         $orderDAL->deleteOne($id);
-        $orderDetail->deleteOrderDetail($id);
+        $orderDAL->deleteOrderDetail($id);
         header('location:list.php');
     }
 }
@@ -84,39 +84,35 @@ if (isset($_GET['action'])) {
                                                 <thead>
                                                     <tr>
                                                         <th> id</th>
-                                                        <th>date_create</th>
-                                                        <th> status</th>
+                                                        <th>product name</th>
+                                                        <th> order_id</th>
+                                                        <th> price</th>
+                                                        <th> quantity</th>
                                                         <th> sub_total</th>
-                                                        <th> tax</th>
-                                                        <th> total</th>
-                                                        <th> user_name</th>
                                                     </tr>
                                                 </thead>
                                                 <?php
-                                                foreach ($result as $row) :
+                                                foreach ($resultNum as $row) :
                                                 ?>
                                                     <tbody>
                                                         <tr>
                                                             <td>
+                                                                <?php echo $row['order_detail_id']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['product_name']; ?>
+                                                            </td>
+                                                            <td>
                                                                 <?php echo $row['order_id']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $row['date_created']; ?>
+                                                                <?php echo $row['price']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $row['status']; ?>
+                                                                <?php echo $row['quantity']; ?>
                                                             </td>
                                                             <td>
                                                                 <?php echo $row['sub_total']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['tax']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['total']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['users_name']; ?>
                                                             </td>
                                                             <td>
                                                                 <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>

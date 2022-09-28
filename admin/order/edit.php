@@ -2,20 +2,16 @@
 session_start();
 $dir = str_replace("admin\order", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/orders 
 require_once $dir . 'dals/orderDAL.php';
-require_once $dir . 'dals/orderDetailDAL.php';
-
-
-
-$orderDetail = new orderDetailDAL();
-$orderDAL = new orderDAL();
-$resultNum = $orderDAL->getList();
 
 // kiểm tra đăng nhập
 
 if (!isset($_SESSION['loginAdmin'])) {
     header('location:login.php');
 }
-// trả về số sản phẩm có table
+$orderDAL = new orderDAL();
+$resultNum = $orderDAL->getList();
+
+// trả về số sản phẩm có trong giỏ hàng
 $number = mysqli_num_rows($resultNum);
 
 //  hàm ceil là làm trò lên 
@@ -38,7 +34,7 @@ if (isset($_GET['action'])) {
     if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
         $id = $_GET['id'];
         $orderDAL->deleteOne($id);
-        $orderDetail->deleteOrderDetail($id);
+        $orderDAL->deleteOrderDetail($id);
         header('location:list.php');
     }
 }

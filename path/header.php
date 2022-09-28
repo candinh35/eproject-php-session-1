@@ -41,12 +41,18 @@
                         <div class="login">
                             <i class="hover:text-amber-600 text-xl mr-3 fa-solid fa-user"></i>
                             <ul class="login-list">
-                                <li class="mb-3 border-2">
-                                    <a class="hover:text-amber-600" href="">quản lý tài khoản</a>
-                                </li>
-                                <li>
-                                    <a class="hover:text-amber-600" href="?logout=1">Thoat</a>
-                                </li>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-item dropdown-header" style="margin-left: 64px;">Lựa Chọn</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="hover:text-amber-600" style="display:block;margin:10px 0">
+                                <i class="fa-solid fa-gear mr-3"></i>quản lí tài khoản
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="?logout=1" class="hover:text-amber-600">
+                                <i class="fa-solid fa-right-from-bracket mr-3"></i> Đăng Xuất
+                            </a>
+
+                        </div>
                             </ul>
                         </div>
                     <?php } else {

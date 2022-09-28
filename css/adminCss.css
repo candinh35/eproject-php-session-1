@@ -13,7 +13,7 @@
 }
 
 .loginAdmin {
-    height: 88vh;
+    height: 87vh;
     background-color: linen;
 }
 
@@ -29,13 +29,15 @@
 
 .login-list {
     position: absolute;
-    width: 180px;
-    top: -30px;
-    left: -190px;
+    width: 226px;
+    top: 39px;
+    left: -201px;
     padding: 15px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     display: none;
+    background-color: #fff;
+    z-index: 10;
 }
 
 .open>.login-list {

@@ -3,10 +3,11 @@ session_start();
 require_once 'dals/productDAL.php';
 require_once 'dals/logoDAL.php';
 require_once 'dals/OrderDAL.php';
+require_once 'dals/orderDetailDAL.php';
 require_once 'Utils.php';
 $productDAL = new productDAL();
 $orderDAL = new OrderDAL();
-
+$order_detail = new orderDetailDAL();
 //lấy dữ liệu gửi lên từ submit
 
 if (isset($_GET['action'])) {
@@ -80,17 +81,17 @@ if (isset($_GET['action'])) {
                 $insertOrder = "";
                 $count =  mysqli_num_rows($result);
                 $sub_total = 0;
-                foreach($result as $key => $orderItem){
-                    $sub_total = ($orderItem['price'] * $cart[$orderItem['id']]) ;
-                    $insertOrder .= "(".$orderItem['id'].",".$order_id.",".$orderItem['price'].",".$cart[$orderItem['id']].",".$sub_total.")";
-                   if($key != $count -1 ){
-                    $insertOrder .= ",";
-                   }
+                foreach ($result as $key => $orderItem) {
+                    $sub_total = ($orderItem['price'] * $cart[$orderItem['id']]);
+                    $insertOrder .= "(" . $orderItem['id'] . "," . $order_id . "," . $orderItem['price'] . "," . $cart[$orderItem['id']] . "," . $sub_total . ")";
+                    if ($key != $count - 1) {
+                        $insertOrder .= ",";
+                    }
                 };
                 // var_dump($insertOrder);exit;
 
                 // lưu vào table order_detail
-                $orderDAL->makeOrderDetail($insertOrder);
+                $order_detail->makeOrderDetail($insertOrder);
 
                 // thông báo 
                 if ($order_id) {

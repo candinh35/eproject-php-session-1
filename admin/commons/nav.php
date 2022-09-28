@@ -16,9 +16,7 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
+                
             </ul>
 
             <!-- Right navbar links -->
@@ -54,20 +52,15 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <a href="" class="brand-link">
+                <span class="brand-text font-weight-light">eProject</span>
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
+                   
                 </div>
 
                 <!-- SidebarSearch Form -->
@@ -89,8 +82,8 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
              with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
+                            <i class="fa-solid fa-users"></i>
+                                <p class="ml-3">
                                     User
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
@@ -113,8 +106,8 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
+                            <i class="fa-brands fa-product-hunt"></i>
+                                <p class="ml-3">
                                     Product
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
@@ -137,8 +130,8 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
+                            <i class="fa-solid fa-list"></i>
+                                <p class="ml-3">
                                     Category
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
@@ -161,8 +154,8 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
+                            <i class="fa-solid fa-bag-shopping"></i>
+                                <p class="ml-3">
                                     Order
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
@@ -174,14 +167,31 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
                                         <p>List</p>
                                     </a>
                                 </li>
-                                
-
+                                <li class="nav-item">
+                                <li class="nav-item">
+                            <a href="#" class="nav-link">
+                            <i class="fa-solid fa-list"></i>
+                                <p class="ml-3">
+                                    order_detail
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="./../order/list-detail.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
+                            <i class="fa-brands fa-wordpress"></i>
+                                <p class="ml-3">
                                     Logo
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
@@ -204,34 +214,19 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
                         </li>
                     </ul>
                 </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
         </aside>
 
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Dashboard</h1>
+                            <h1 class="m-0">Admin</h1>
                         </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Dashboard v1</li>
-                            </ol>
-                        </div>
-                        <!-- /.col -->
+                       
                     </div>
-                    <!-- /.row -->
                 </div>
-                <!-- /.container-fluid -->
             </div>
-            <!-- /.content-header -->
-
-            <!-- Main content -->
+           
            
