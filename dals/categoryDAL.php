@@ -33,13 +33,13 @@ class categoryDAL extends DB {
         mysqli_query($this->connect,$sql);
     }
 
-    function add ($name){
-        $sql = "INSERT INTO category (name) value ('$name') ";
+    function add ($name, $position){
+        $sql = "INSERT INTO category (name,position) value ('$name', $position) ";
         return mysqli_query($this->connect, $sql);
     }
 
-    function edit( $id,$name){
-        $sql = "UPDATE `category` SET `name`='$name' WHERE id=$id";
+    function edit( $id,$name, $position){
+        $sql = "UPDATE `category` SET `name`='$name' `position`= $position WHERE id=$id";
         return mysqli_query($this->connect,$sql);
 
     }

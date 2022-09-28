@@ -68,7 +68,7 @@ if (isset($_GET['action'])) {
 
                     </div>
                     <!-- /.card-header -->
-                    
+
                     <div class="card-body">
                         <div class="tab-content p-0">
                             <!-- content -->
@@ -119,12 +119,12 @@ if (isset($_GET['action'])) {
                                                                 <?php echo $row['users_name']; ?>
                                                             </td>
                                                             <td>
-                                                                <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>
+                                                                <a href="edit.php?id=<?php echo $row['order_id']; ?>" class="btn btn-primary">sửa</a>
                                                                 <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['order_id']; ?>">xóa</a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>
-                                                   
+
                                                     </tbody>
                                             </table>
                                         </div>
@@ -144,15 +144,11 @@ if (isset($_GET['action'])) {
                                         $i++;
                                     }
                                     ?>
-                                    <!-- /.card -->
                                 </div>
-                                <!-- /.col -->
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </section>
 
 

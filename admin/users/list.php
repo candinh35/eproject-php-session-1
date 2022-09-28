@@ -1,11 +1,11 @@
-<?php 
+<?php
 session_start();
 $dir = str_replace("admin\users", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/users 
 require_once $dir . 'dals/userDAL.php';
 
 // kiểm tra đăng nhập
 
-if(!isset($_SESSION['loginAdmin'])){
+if (!isset($_SESSION['loginAdmin'])) {
     header('location:login.php');
 }
 $userDAL = new userDAL();
@@ -15,18 +15,18 @@ $number = mysqli_num_rows($resultNum);
 //  hàm ceil là làm trò lên 
 $sotrang = ceil($number / 10);
 if (isset($_POST['name']) && $_POST['name'] != null) {
-$name = $_POST['name'];
-// hàm tìm sản phẩm trong column name
-$result = $userDAL->getSearch($name);
+    $name = $_POST['name'];
+    // hàm tìm sản phẩm trong column name
+    $result = $userDAL->getSearch($name);
 } else {
-if (isset($_GET['id']) && $_GET['id'] !== null) {
-    $id = $_GET['id'];
-    // truyên id sang để lấy vè số bản ghi tương ứng
-    $result = $userDAL->paging($id);
-}else{
-    $id = 1;
-    $result = $userDAL->paging($id);
-}
+    if (isset($_GET['id']) && $_GET['id'] !== null) {
+        $id = $_GET['id'];
+        // truyên id sang để lấy vè số bản ghi tương ứng
+        $result = $userDAL->paging($id);
+    } else {
+        $id = 1;
+        $result = $userDAL->paging($id);
+    }
 }
 if (isset($_GET['action'])) {
     if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
@@ -117,13 +117,12 @@ if (isset($_GET['action'])) {
                                                     <?php endforeach; ?>
                                                     <tr>
                                                         <td>
-                                                            <a href="add.php">thêm</a>
+                                                            <a href="add.php" class="btn btn-dark">thêm</a>
                                                         </td>
                                                     </tr>
                                                     </tbody>
                                             </table>
                                         </div>
-                                        <!-- /.card-body -->
                                     </div>
                                     <?php
                                     $i = 1;
@@ -139,15 +138,11 @@ if (isset($_GET['action'])) {
                                         $i++;
                                     }
                                     ?>
-                                    <!-- /.card -->
                                 </div>
-                                <!-- /.col -->
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </section>
 
 
@@ -156,7 +151,6 @@ if (isset($_GET['action'])) {
         </div>
 
     </div>
-    <!-- /.content-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 

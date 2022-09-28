@@ -21,18 +21,23 @@ if (isset($_POST['name'])) {
         $image = $dirImg . '/' . $imgName;
         move_uploaded_file($imgTmp, $image);
         $upImage = $relativeDir . '/' . $imgName;
-    }
-    $checked = $productDAL->add($name, $price, $upImage, $description, $category_id);
-    if ($checked) {
-        //flash session
-        $_SESSION['add-status'] = [
-            'success' => 1,
-            'message' => 'Edit successfully'
-        ];
+        $checked = $productDAL->add($name, $price, $upImage, $description, $category_id);
+        if ($checked) {
+            //flash session
+            $_SESSION['add-status'] = [
+                'success' => 1,
+                'message' => 'Edit successfully'
+            ];
+        } else {
+            $_SESSION['add-status'] = [
+                'success' => 0,
+                'message' => 'Edit failed'
+            ];
+        }
     } else {
         $_SESSION['add-status'] = [
             'success' => 0,
-            'message' => 'Edit failed'
+            'message' => 'vui lòng thêm ảnh cho sản phẩm'
         ];
     }
 }
@@ -77,7 +82,7 @@ if (isset($_POST['name'])) {
                                 unset($_SESSION['add-status']);
                             }
                             ?>
-                           
+
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="input-group mb-3">
                                     <label for="" class="">Name</label>
@@ -125,9 +130,9 @@ if (isset($_POST['name'])) {
                                 <div class="input-group input-group-sm">
                                     <textarea class="form-control" name="description" id="" cols="30" rows="15"></textarea>
 
-                                </div> 
+                                </div>
                                 <span class="input-group-append mt-3">
-                                    <button  class="btn btn-info btn-flat">add</button>
+                                    <button class="btn btn-info btn-flat">add</button>
                                 </span>
                             </form>
                         </div>

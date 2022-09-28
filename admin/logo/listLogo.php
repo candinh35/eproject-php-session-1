@@ -5,14 +5,14 @@ require_once $dir . 'dals\logoDAL.php';
 require_once $dir . 'config.php';
 $logoDAL = new logoDAL();
 $result = $logoDAL->getList();
-if(isset($_GET['action']) ){
-$id = $_GET['id'];
-$linkImg = $logoDAL->getOne($id);
-$logoDAL->deleteOne($id);
-if($linkImg){
-    $checked = $dir . $linkImg['logo'];
-    unlink($checked);
-}
+if (isset($_GET['action'])) {
+    $id = $_GET['id'];
+    $linkImg = $logoDAL->getOne($id);
+    $logoDAL->deleteOne($id);
+    if ($linkImg) {
+        $checked = $dir . $linkImg['logo'];
+        unlink($checked);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -47,48 +47,39 @@ if($linkImg){
                                     <h3 class="card-title">Input Addon</h3>
                                 </div>
                                 <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover w-full mb-3">
-                                <thead>
-                        <th>id</th>
-                        <th>logo</th>
-                    </thead>
-                    <tbody>
-                        <?php foreach($result as $row): ?>
-                        <tr>
-                            <td><?php echo $row['id']?></td>
-                            <td><img src=" <?php echo BASE_URL . $row['logo']?>" alt="" width="150"></td>
-                            <td>
-                                <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id']?>">xoa</a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                        <tr>
-                            <td>
-                                <a href="addLogo.php">them</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                                            </table>
-                                            
-                                    <!-- /input-group -->
+                                    <table id="example2" class="table table-bordered table-hover w-full mb-3">
+                                        <thead>
+                                            <th>id</th>
+                                            <th>logo</th>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($result as $row) : ?>
+                                                <tr>
+                                                    <td><?php echo $row['id'] ?></td>
+                                                    <td><img src=" <?php echo BASE_URL . $row['logo'] ?>" alt="" width="150"></td>
+                                                    <td>
+                                                        <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id'] ?>">xoa</a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                            <tr>
+                                                <td>
+                                                    <a href="addLogo.php" class="btn btn-dark">them</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
                                 </div>
-                                <!-- /.card-body -->
                             </div>
 
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </section>
-
-
-
-
         </div>
 
     </div>
-    <!-- /.content-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 

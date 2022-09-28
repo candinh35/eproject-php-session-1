@@ -114,10 +114,7 @@ if (isset($_GET['action'])) {
                                                             <td>
                                                                 <?php echo $row['sub_total']; ?>
                                                             </td>
-                                                            <td>
-                                                                <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>
-                                                                <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['order_id']; ?>">xóa</a>
-                                                            </td>
+                                                           
                                                         </tr>
                                                     <?php endforeach; ?>
                                                    
@@ -140,15 +137,11 @@ if (isset($_GET['action'])) {
                                         $i++;
                                     }
                                     ?>
-                                    <!-- /.card -->
                                 </div>
-                                <!-- /.col -->
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </section>
 
 

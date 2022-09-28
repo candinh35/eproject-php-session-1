@@ -10,7 +10,8 @@ $id = $_GET['id'];
 // nếu có dữ liệu gửi lên thì bắt đầu gọi hàm sửa
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
-    $checked = $userDAL->edit($id, $name);
+    $position = $_POST['position'];
+    $checked = $userDAL->edit($id, $name, $position);
     if ($checked) {
         //flash session
         $_SESSION['add-status'] = [
@@ -70,6 +71,10 @@ $row = $userDAL->getOne($id);
                                 <label for="">name</label>
                                 <div class="col-sm-10 mb-3">
                                     <input type="text" class="form-control" id="inputEmail3" value="<?php echo $row['name'] ?>" name="name">
+                                </div>
+                                <label for="">position</label>
+                                <div class="col-sm-10 mb-3">
+                                    <input type="text" class="form-control" id="inputEmail3" value="<?php echo $row['position'] ?>" name="position">
                                 </div>
                                 <button class="btn btn-info">edit</button>
 

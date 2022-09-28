@@ -4,7 +4,8 @@ require_once $dir . 'dals/categoryDAL.php';
 $userDAL = new categoryDAL();
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
-    $userDAL->add($name);
+    $position = $_POST['position'];
+    $userDAL->add($name, $possition);
 }
 ?>
 <!DOCTYPE html>
@@ -43,6 +44,10 @@ if (isset($_POST['name'])) {
                                         <label for="">name</label>
                                         <div class="col-sm-10 mb-3">
                                             <input type="text" class="form-control" id="inputEmail3" placeholder="name" name="name">
+                                        </div>
+                                        <label for="">position</label>
+                                        <div class="col-sm-10 mb-3">
+                                            <input type="text" class="form-control" id="inputEmail3" placeholder="position" name="position">
                                         </div>
                                         <button class="btn btn-info">add</button>
                                     </form>

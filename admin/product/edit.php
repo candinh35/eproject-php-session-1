@@ -33,16 +33,39 @@ if (isset($_POST['name'])) {
         $nameImg = time() . $_FILES['image']['name'];
         $nameTMP = $_FILES['image']['tmp_name'];
         $uploadImg =  $newDir . '/' . $nameImg;
-        $checked = move_uploaded_file($nameTMP, $uploadImg);
-        if ($checked) {
+        $checkImg = move_uploaded_file($nameTMP, $uploadImg);
+        if ($checkImg) {
             unlink($dir . $row['image']);
         }
         $image = $relativeDir . '/' . $nameImg;
-        $productDAL->edit($id, $name, $price, $description, $image, $category_id);
+        $checked = $productDAL->edit($id, $name, $price, $description, $image, $category_id);
+        if ($checked) {
+            //flash session
+            $_SESSION['add-status'] = [
+                'success' => 1,
+                'message' => 'Edit successfully'
+            ];
+        } else {
+            $_SESSION['add-status'] = [
+                'success' => 0,
+                'message' => 'Edit failed'
+            ];
+        }
     }
-    $productDAL->edit1($id, $name, $price, $description, $category_id);
+   $checked = $productDAL->edit1($id, $name, $price, $description, $category_id);
+    if ($checked) {
+        //flash session
+        $_SESSION['add-status'] = [
+            'success' => 1,
+            'message' => 'Edit successfully'
+        ];
+    } else {
+        $_SESSION['add-status'] = [
+            'success' => 0,
+            'message' => 'Edit failed'
+        ];
+    }
 
-    echo $price;
 }
 ?>
 <!DOCTYPE html>
@@ -63,7 +86,7 @@ if (isset($_POST['name'])) {
                 <div class="card content1">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i> User
+                            <i class="fas fa-chart-pie mr-1"></i> Product
                         </h3>
 
                     </div>
@@ -71,6 +94,20 @@ if (isset($_POST['name'])) {
 
                     <div class="card-body">
                         <div class="tab-content p-0">
+                        <?php
+                            if (isset($_SESSION['add-status'])) {
+                                if ($_SESSION['add-status']['success'] == 1) {
+                                    echo '<div class="alert alert-success" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                } else {
+                                    echo '<div class="alert alert-danger" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                }
+                                unset($_SESSION['add-status']);
+                            }
+                            ?>
                             <!-- content -->
                             <div class="card card-info">
                                 <div class="card-header">
@@ -79,8 +116,14 @@ if (isset($_POST['name'])) {
                                 <div class="card-body">
                                     <form action="" method="post">
                                         <div class="input-group mb-3">
+                                            <label for="" class="">Name</label>
+                                        </div>
+                                        <div class="input-group mb-3">
 
                                             <input type="name" value="<?php echo $row['name'] ?>" name="name" class="form-control">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <label for="" class="">Price</label>
                                         </div>
 
                                         <div class="input-group mb-3">
@@ -92,13 +135,19 @@ if (isset($_POST['name'])) {
                                                 <span class="input-group-text">.00</span>
                                             </div>
                                         </div>
+                                        <div class="input-group mb-3">
+                                            <label for="" class="">image</label>
+                                        </div>
 
                                         <div class="input-group mb-3">
                                             <input type="file" name="image" class="form-control">
                                         </div>
+                                        <div class="input-group mb-3">
+                                            <label for="" class="">Category</label>
+                                        </div>
 
                                         <div class="input-group">
-                                            <label for="" class="">category</label>
+
 
                                             <select class="form-control" name="category_id" value="<?php echo $row['category_id'] ?>">
                                                 <?php foreach ($result as $row1) : ?>
@@ -111,24 +160,22 @@ if (isset($_POST['name'])) {
 
                                         <!-- /input-group -->
 
-                                        <label>description</label>
+                                        <div class="input-group mb-3">
+                                            <label for="" class="">Description</label>
+                                        </div>
                                         <div class="input-group input-group-sm">
-                                            <textarea class="form-control" name="" id="" cols="30" rows="15"><?php echo $row['description'] ?></textarea>
+                                            <textarea class="form-control" name="description" id="" cols="30" rows="15"><?php echo $row['description'] ?></textarea>
 
                                         </div> <span class="input-group-append">
-                                            <button type="button" class="btn btn-info btn-flat">Go!</button>
+                                            <button  class="btn btn-info btn-flat">Go!</button>
                                         </span>
                                     </form>
-                                    <!-- /input-group -->
                                 </div>
-                                <!-- /.card-body -->
                             </div>
 
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </section>
 
 

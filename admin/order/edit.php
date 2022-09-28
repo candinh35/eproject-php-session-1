@@ -9,36 +9,29 @@ if (!isset($_SESSION['loginAdmin'])) {
     header('location:login.php');
 }
 $orderDAL = new orderDAL();
-$resultNum = $orderDAL->getList();
 
-// trả về số sản phẩm có trong giỏ hàng
-$number = mysqli_num_rows($resultNum);
+if ($_GET['id'] && !is_numeric($_GET['id'])) {
+    header('Location:list.php');
+}
 
-//  hàm ceil là làm trò lên 
-$sotrang = ceil($number / 10);
-if (isset($_POST['name']) && $_POST['name'] != null) {
-    $name = $_POST['name'];
-    // hàm tìm sản phẩm trong column name
-    $result = $orderDAL->getSearch($name);
-} else {
-    if (isset($_GET['id']) && $_GET['id'] !== null) {
-        $id = $_GET['id'];
-        // truyên id sang để lấy vè số bản ghi tương ứng
-        $result = $orderDAL->paging($id);
+$id = $_GET['id'];
+$row = $orderDAL->getOne($id);
+if (isset($_POST['status'])) {
+    $status = $_POST['status'];
+    $checked = $orderDAL->edit($id , $status);
+    if ($checked) {
+        //flash session
+        $_SESSION['add-status'] = [
+            'success' => 1,
+            'message' => 'Edit successfully'
+        ];
     } else {
-        $id = 1;
-        $result = $orderDAL->paging($id);
+        $_SESSION['add-status'] = [
+            'success' => 0,
+            'message' => 'Edit failed'
+        ];
     }
 }
-if (isset($_GET['action'])) {
-    if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
-        $id = $_GET['id'];
-        $orderDAL->deleteOne($id);
-        $orderDAL->deleteOrderDetail($id);
-        header('location:list.php');
-    }
-}
-
 
 ?>
 <!DOCTYPE html>
@@ -64,9 +57,23 @@ if (isset($_GET['action'])) {
 
                     </div>
                     <!-- /.card-header -->
-                    
+
                     <div class="card-body">
                         <div class="tab-content p-0">
+                        <?php
+                            if (isset($_SESSION['add-status'])) {
+                                if ($_SESSION['add-status']['success'] == 1) {
+                                    echo '<div class="alert alert-success" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                } else {
+                                    echo '<div class="alert alert-danger" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                }
+                                unset($_SESSION['add-status']);
+                            }
+                            ?>
                             <!-- content -->
                             <div class="row">
                                 <div class="col-12">
@@ -76,79 +83,26 @@ if (isset($_GET['action'])) {
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
-                                            <table id="example2" class="table table-bordered table-hover w-full">
-                                                <thead>
-                                                    <tr>
-                                                        <th> id</th>
-                                                        <th>date_create</th>
-                                                        <th> status</th>
-                                                        <th> sub_total</th>
-                                                        <th> tax</th>
-                                                        <th> total</th>
-                                                        <th> user_name</th>
-                                                    </tr>
-                                                </thead>
-                                                <?php
-                                                foreach ($result as $row) :
-                                                ?>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <?php echo $row['order_id']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['date_created']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['status']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['sub_total']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['tax']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['total']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $row['users_name']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>
-                                                                <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['order_id']; ?>">xóa</a>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endforeach; ?>
-                                                   
-                                                    </tbody>
-                                            </table>
+                                       
+                                            <form action="" method="post">
+                                                <div class="input-group mb-3">
+                                                    <label for="" class="">status</label>
+                                                </div>
+                                                <div class="input-group mb-3">
+
+                                                    <input type="name" value="<?php echo $row['status'] ?>" name="status" class="form-control">
+                                                </div>
+                                                <button class="btn btn-info btn-flat">edit</button>
+                                            </form>
                                         </div>
                                         <!-- /.card-body -->
                                     </div>
-                                    <?php
-                                    $i = 1;
-                                    while ($i <= $sotrang) { ?>
-                                        <div style="width: 100px; list-style:none; display:inline-block">
-                                            <li class="page-item <?php if (!$id) {
-                                                                        $id = 1;
-                                                                    }
-                                                                    echo ($id == $i) ? 'active' : ''; ?>"><a style="text-align: center;" class="page-link" href="<?php $dir . 'admin/product/list.php' ?>?id=<?php echo $i ?>"><?php echo $i ?></a></li>
-                                        </div>
-
-                                    <?php
-                                        $i++;
-                                    }
-                                    ?>
-                                    <!-- /.card -->
+                                   
                                 </div>
-                                <!-- /.col -->
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </section>
 
 

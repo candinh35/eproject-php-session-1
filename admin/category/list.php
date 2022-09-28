@@ -68,6 +68,7 @@ if (isset($_GET['action'])) {
                             <tr>
                                 <th> id</th>
                                 <th>name</th>
+                                <th>position</th>
                             </tr>
                         </thead>
                         <?php
@@ -80,6 +81,9 @@ if (isset($_GET['action'])) {
                                     </td>
                                     <td>
                                         <?php echo $row['name']; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['position']; ?>
                                     </td>
                                 
                                     <td>

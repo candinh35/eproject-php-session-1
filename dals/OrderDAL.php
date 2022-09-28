@@ -16,6 +16,19 @@ class OrderDAL extends DB
         $result = mysqli_query($this->connect, $sql);
         return $result;
     }
+    
+    function getOne($id)
+    {
+        $sql = "SELECT * FROM orders  WHERE id = $id";
+        $result = mysqli_query($this->connect, $sql);
+        return mysqli_fetch_assoc($result);
+    }
+    function edit($id,$status)
+    {
+        $sql = "UPDATE `orders` SET status=$status WHERE id=$id";
+       return mysqli_query($this->connect, $sql);
+    }
+
     function makeOrderDetail($data)
     {
         $sql = "INSERT INTO `order_detail`(`product_id`, `order_id`, `price`, `quantity`, `sub_total`) VALUES $data";

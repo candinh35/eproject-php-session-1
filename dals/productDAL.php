@@ -43,13 +43,13 @@ class productDAL extends DB
     function edit($id, $name, $price, $description, $image, $category_id)
     {
         $sql = "UPDATE `products` SET `name`='$name', price= $price ,`description`='$description',`image`='$image',`category_id`=$category_id WHERE id=$id";
-        mysqli_query($this->connect, $sql);
+       return mysqli_query($this->connect, $sql);
     }
 
     function edit1($id, $name, $price, $description, $category_id)
     {
         $sql = "UPDATE `products` SET `name`='$name', `price`= '$price' ,`description`='$description',`category_id`='$category_id' WHERE id=$id";
-        mysqli_query($this->connect, $sql);
+       return mysqli_query($this->connect, $sql);
     }
 
     function getListByIdCategory($category_id)
