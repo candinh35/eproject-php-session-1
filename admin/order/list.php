@@ -3,6 +3,7 @@ session_start();
 $dir = str_replace("admin\order", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/orders 
 require_once $dir . 'dals/orderDAL.php';
 require_once $dir . 'dals/orderDetailDAL.php';
+require_once $dir. "Utils.php";
 
 
 
@@ -107,13 +108,13 @@ if (isset($_GET['action'])) {
                                                                 <?php echo $row['status']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $row['sub_total']; ?>
+                                                                <?php echo Utils::formatMoney($row['sub_total']) ; ?>
                                                             </td>
                                                             <td>
                                                                 <?php echo $row['tax']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $row['total']; ?>
+                                                                <?php echo Utils::formatMoney($row['total']); ?>
                                                             </td>
                                                             <td>
                                                                 <?php echo $row['users_name']; ?>

@@ -12,7 +12,7 @@
                     </ul>
                 </div>
                 <div class="text-center info_footer lg:mt-0 mt-8">
-                    <div class="w-52 h-14 lg:mr-0 lg:mr-16 lg:ml-44 ml-12 ">
+                    <div class="w-52 h-14 mx-auto">
                         <a href="index.php">
                             <img src="<?php echo $r['logo']; ?>" alt="logo-mona-furniture-14 " class="w-full h-full ">
                         </a>

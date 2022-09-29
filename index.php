@@ -16,10 +16,9 @@ $userDAL = new userDAL();
 $categoryDAL = new categoryDAL();
 $categoryList = $categoryDAL->getList();
 
+
 //  kết nối tơi trang product
-
 $productDAL = new productDAL();
-
 
 // kiểm tra session  cart
 if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {

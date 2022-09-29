@@ -34,7 +34,7 @@ class categoryDAL extends DB {
     }
 
     function add ($name, $position){
-        $sql = "INSERT INTO category (name,position) value ('$name', $position) ";
+        $sql = "INSERT INTO category (name,position) value ('$name',$position)";
         return mysqli_query($this->connect, $sql);
     }
 
@@ -49,6 +49,7 @@ class categoryDAL extends DB {
         $result = mysqli_query($this->connect, $sql);
     return $result;
     }
+
 }
 
 ?>

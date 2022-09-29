@@ -26,12 +26,12 @@ if (isset($_POST['name'])) {
             //flash session
             $_SESSION['add-status'] = [
                 'success' => 1,
-                'message' => 'Edit successfully'
+                'message' => 'add successfully'
             ];
         } else {
             $_SESSION['add-status'] = [
                 'success' => 0,
-                'message' => 'Edit failed'
+                'message' => 'add failed'
             ];
         }
     } else {
@@ -85,14 +85,14 @@ if (isset($_POST['name'])) {
 
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="input-group mb-3">
-                                    <label for="" class="">Name</label>
+                                    <label for="" class="">Name *</label>
                                 </div>
                                 <div class="input-group mb-3">
 
                                     <input type="name" placeholder="name" name="name" class="form-control">
                                 </div>
                                 <div class="input-group mb-3">
-                                    <label for="" class="">Price</label>
+                                    <label for="" class="">Price *</label>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -104,13 +104,13 @@ if (isset($_POST['name'])) {
                                     </div>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <label for="" class="">image</label>
+                                    <label for="" class="">image *</label>
                                 </div>
                                 <div class="input-group mb-3">
                                     <input type="file" name="image" class="form-control">
                                 </div>
                                 <div class="input-group mb-3">
-                                    <label for="" class="">category</label>
+                                    <label for="" class="">category *</label>
                                 </div>
                                 <div class="input-group mb-3">
 
@@ -125,7 +125,7 @@ if (isset($_POST['name'])) {
                                 <!-- /input-group -->
 
                                 <div class="input-group mb-3">
-                                    <label for="" class="">description</label>
+                                    <label for="" class="">description *</label>
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <textarea class="form-control" name="description" id="" cols="30" rows="15"></textarea>

@@ -2,10 +2,18 @@
 $dir = str_replace("admin\category", "", __DIR__);
 require_once $dir . 'dals/categoryDAL.php';
 $userDAL = new categoryDAL();
+
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
     $position = $_POST['position'];
-    $userDAL->add($name, $possition);
+    if($name == null){
+        $_SESSION['add-status'] = [
+            'success' => 0,
+            'message' => 'Bạn vui lòng nhập name',
+        ];
+    }else{
+        $userDAL->add($name, $position);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -34,6 +42,20 @@ if (isset($_POST['name'])) {
 
                     <div class="card-body">
                         <div class="tab-content p-0">
+                        <?php
+                            if (isset($_SESSION['add-status'])) {
+                                if ($_SESSION['add-status']['success'] == 1) {
+                                    echo '<div class="alert alert-success" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                } else {
+                                    echo '<div class="alert alert-danger" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                }
+                                unset($_SESSION['add-status']);
+                            }
+                            ?>
                             <!-- content -->
                             <div class="card card-info">
                                 <div class="card-header">

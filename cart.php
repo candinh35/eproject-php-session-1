@@ -65,7 +65,9 @@ if (isset($_GET['action'])) {
                 $user_id = $_SESSION['login'][0];
                 $date = date("y-m-d");
                 $status = 1;
-
+                if(!isset($_SESSION['cart'])){
+                    header('location:index.php');
+                }
                 $cart = $_SESSION['cart'];
                 $order = implode(",", array_keys($cart));
                 // lấy ra các product có id lưu trong cart
@@ -77,6 +79,7 @@ if (isset($_GET['action'])) {
                 $tax = 10;
                 $total = $subTotal + ($subTotal * ($tax / 100));
                 $order_id = $orderDAL->makeOrder($date, $status, $subTotal, $tax, $total, $user_id);
+                unset($_SESSION['cart']);
                 //  add vào order_detail
                 $insertOrder = "";
                 $count =  mysqli_num_rows($result);
@@ -98,8 +101,10 @@ if (isset($_GET['action'])) {
                     //flash session
                     $_SESSION['add-status'] = [
                         'success' => 1,
-                        'message' => 'Bạn đã đặt hàng thành công'
+                        'message' => 'Bạn đã đặt hàng thành công',
+                        'notify' => 'xem đơn hàng'
                     ];
+                    
                 } else {
                     $_SESSION['add-status'] = [
                         'success' => 0,
@@ -148,28 +153,30 @@ $totally = 0;
     <h3 class="text-red-500 text-center text-2xl"><?php if (isset($failed)) {
                                                         echo $failed;
                                                     } ?></h3>
-    <?php
-    if (isset($_SESSION['add-status'])) {
-        if ($_SESSION['add-status']['success'] == 1) {
-            echo '<div class="text-2xl text-center text-green-500" role="alert">
-                    ' . $_SESSION['add-status']['message'] . '
-                  </div>';
-        } else {
-            echo '<div class="ext-2xl text-center text-red-500" role="alert">
-                    ' . $_SESSION['add-status']['message'] . '
-                  </div>';
-        }
-        unset($_SESSION['add-status']);
-    }
-    ?>
+    
     <!-- content -->
     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
         <?php if (isset($cart)) { ?>
 
             <div class="lg:flex gap-5 block justify-between">
-                <form action="cart.php?action=submit" method="post">
+                <form action="cart.php?action=submit" method="post" style="width:60%">
                     <div class="product_order border-r-2 pr-10">
+                    <?php
+    if (isset($_SESSION['add-status'])) {
+        if ($_SESSION['add-status']['success'] == 1) {
+            echo '<div class="text-2xl text-center text-green-500 mb-4" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>'?>
 
+             <div class="text-center text-2xl px-10 leading-10 mx-auto w-60 pb-2 border-2  mb-40 hover:bg-gray-800 text-black hover:text-white  "><a href="cart-detail.php"><?php echo $_SESSION['add-status']['notify'] ?></a></div>
+       <?php } else {
+            echo '<div class="ext-2xl text-center text-red-500" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+        }
+        unset($_SESSION['add-status']);
+    }else{
+    ?>
                         <table cellpadding=15 class="mb-7">
                             <thead>
                                 <tr class="border-b-2 border-slate-400">
@@ -206,6 +213,7 @@ $totally = 0;
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        <?php }?>
                         <div class="flex  gap-4">
                             <a href="index.php" class="hover:bg-gray-800 text-black border-2 lg:px-10 px-4 py-2 hover:text-white uppercase ">Tiếp tục xem sản phẩm</a>
                             <input class="bg-gray-800 lg:px-10 px-4 py-2 text-white uppercase cursor-pointer" type="submit" name="update_click" value="Cập Nhật">
@@ -217,7 +225,7 @@ $totally = 0;
 
                     <h3 class="text-xl uppercase font-medium">tổng số lượng</h3>
                     <div class="flex justify-between border-b-2 pb-4 pt-6">
-                        <p>Tổng cộng</p>
+                        <p>Tổng giá</p>
                         <p class="font-bold"><?php echo Utils::formatMoney($totally) ?></p>
                     </div>
                     <div class="flex justify-between border-b-2 pb-4 pt-6">
@@ -225,11 +233,15 @@ $totally = 0;
                         <p>Giao hàng miễn phí</p>
                     </div>
                     <div class="flex justify-between border-b-2 pb-4 pt-6">
+                        <p>Thuế VAT</p>
+                        <p>10%</p>
+                    </div>
+                    <div class="flex justify-between border-b-2 pb-4 pt-6">
                         <p>Tổng cộng</p>
-                        <p class="font-bold"><?php echo Utils::formatMoney($totally) ?></p>
+                        <p class="font-bold"><?php echo Utils::formatMoney($totally + ($totally * (10/100))) ?></p>
                     </div>
                     <div class="mt-6">
-                        <a href="?action=pay" class="bg-gray-800 border-2 px-10 py-2 text-white uppercase ">Tiến hành thanh toán</a>
+                        <a href="?action=pay" class="bg-gray-800 border-2 px-10 py-2 text-white uppercase ">đặt hàng</a>
                     </div>
                 </div>
             </div>

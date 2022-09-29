@@ -17,8 +17,30 @@
     background-color: linen;
 }
 
+.input-search {
+    border-radius: 5px;
+    line-height: 32px;
+    border-color: rgba(0, 0, 0, 0.1);
+    margin-right: 15px;
+}
 
-/* Index*/
+#form-search {
+    z-index: 1;
+}
+
+.modal-click {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: none;
+}
+
+.product1~.modal-click {
+    display: block;
+}
 
 
 /*Login*/

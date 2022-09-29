@@ -29,11 +29,6 @@ class OrderDAL extends DB
        return mysqli_query($this->connect, $sql);
     }
 
-    function makeOrderDetail($data)
-    {
-        $sql = "INSERT INTO `order_detail`(`product_id`, `order_id`, `price`, `quantity`, `sub_total`) VALUES $data";
-        return mysqli_query($this->connect, $sql);
-    }
     function getList()
     {
         $sql = "SELECT *,orders.id as order_id,users.email as users_name FROM orders INNER JOIN users ON orders.user_id = users.id";
@@ -45,11 +40,7 @@ class OrderDAL extends DB
         $sql = "DELETE FROM orders WHERE id=$id";
         mysqli_query($this->connect, $sql);
     }
-    function deleteOrderDetail($id)
-    {
-        $sql = "DELETE FROM order_detail WHERE order_id = $id";
-        mysqli_query($this->connect, $sql);
-    }
+   
     function paging($id)
     {
         $location = ($id - 1) * 10;
@@ -57,10 +48,10 @@ class OrderDAL extends DB
         $result = mysqli_query($this->connect, $sql);
         return $result;
     }
-    function getByOrderId($orderId)
-    {
-        $sql = "SELECT * FROM order_detail  WHERE order_id = $orderId";
+    function getByIdUser($idUser){
+        $sql = "SELECT * FROM orders  WHERE user_id = $idUser";
         $result = mysqli_query($this->connect, $sql);
-        return mysqli_fetch_assoc($result);
+        return $result;
     }
+    
 }

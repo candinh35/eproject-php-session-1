@@ -2,6 +2,7 @@
 $dir = str_replace("admin\product", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/products
 require_once $dir . 'dals/productDAL.php';
 require_once $dir . 'config.php';
+require_once $dir . "Utils.php";
 $productDAL = new productDAL();
    $resultNum = $productDAL->getList();
     // trả về số sản phẩm có trong giỏ hàng
@@ -65,11 +66,11 @@ if (isset($_GET['action'])) {
 
                     </div>
                     <!-- /.card-header -->
-                    <form action="" method="post" class="search">
+                    <form action="" method="post" class="search mt-3">
                                 <label for="">min</label>
-                                <input type="text" name="min" placeholder="nhap vao gia tim kiem">
+                                <input type="text" name="min" placeholder="nhap vao gia tim kiem" class="input-search">
                                 <label for="">max</label>
-                                <input type="text" name="max" placeholder="nhap vao gia tim kiem">
+                                <input type="text" name="max" placeholder="nhap vao gia tim kiem" class="input-search">
 
                                 <button class="btn btn-dark">tim kiem</button>
 
@@ -94,6 +95,7 @@ if (isset($_GET['action'])) {
                                         <th>image</th>
                                         <th>description</th>
                                         <th>category_id</th>
+                                        <th colspan="2">lựa chọn</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -108,7 +110,7 @@ if (isset($_GET['action'])) {
                                                 <?php echo $row['product_name']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $row['price']; ?>
+                                                <?php echo Utils::formatMoney($row['price']); ?>
                                             </td>
                                             <td>
                                                 <img src="<?php echo BASE_URL . $row['image']; ?>" alt="" width="100">
@@ -122,6 +124,8 @@ if (isset($_GET['action'])) {
                                             </td>
                                             <td>
                                                 <a href="edit.php?id=<?php echo $row['product_id']; ?>" class="btn btn-primary">sửa</a>
+                                            </td>
+                                            <td>
                                                 <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['product_id'] ?>&img=<?php echo $row['image']; ?>">xóa</a>
                                             </td>
                                         </tr>

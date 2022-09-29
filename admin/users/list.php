@@ -61,12 +61,11 @@ if (isset($_GET['action'])) {
 
                     </div>
                     <!-- /.card-header -->
-                    <form action="" method="post" class="search">
-                        <label for="">nhập số điện thoại</label>
-                        <input type="text" name="min" placeholder="nhap vao số điện thoại tim kiem" class="">
-
-                        <button class="btn btn-dark">tim kiem</button>
-
+                    <form action="" method="post" class="search mt-3">
+                            <input type="text" name="min" placeholder="nhap vao số điện thoại tim kiem" class="input-search">
+                            <span>
+                                <button class="btn btn-dark">tìm kiếm</button>
+                            </span>
                     </form>
                     <div class="card-body">
                         <div class="tab-content p-0">

@@ -73,4 +73,9 @@ class productDAL extends DB
         $result = mysqli_query($this->connect, $sql);
         return $result;
     }
+    function searchIndex($search){
+        $sql = "SELECT * FROM products WHERE name LIKE '$search%'";
+        $result = mysqli_query($this->connect, $sql);
+        return $result;
+    }
 }

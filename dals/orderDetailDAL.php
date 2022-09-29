@@ -29,8 +29,8 @@ class orderDetailDAL extends DB
     }
     function getByOrderId($orderId)
     {
-        $sql = "SELECT * FROM order_detail  WHERE order_id = $orderId";
+        $sql = "SELECT *,order_detail.id as order_detail_id , products.name as product_name FROM order_detail  INNER JOIN products ON order_detail.product_id = products.id WHERE order_id = $orderId ";
         $result = mysqli_query($this->connect, $sql);
-        return mysqli_fetch_assoc($result);
+        return $result;
     }
 }
