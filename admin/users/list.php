@@ -31,8 +31,18 @@ if (isset($_POST['name']) && $_POST['name'] != null) {
 if (isset($_GET['action'])) {
     if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
         $id = $_GET['id'];
-        $userDAL->deleteOne($id);
-        header('location:list.php');
+       $check =  $userDAL->getOne($id);
+        if($check['identification'] == 1){
+            $_SESSION['add-status'] = [
+                'success' => 0,
+                'message' => 'đây là tài khoản admin không thể xóa'
+            ];
+        }else{
+             $userDAL->deleteOne($id);
+            header('location:list.php');
+        }
+       
+       
     }
 }
 
@@ -69,6 +79,20 @@ if (isset($_GET['action'])) {
                     </form>
                     <div class="card-body">
                         <div class="tab-content p-0">
+                        <?php
+                            if (isset($_SESSION['add-status'])) {
+                                if ($_SESSION['add-status']['success'] == 1) {
+                                    echo '<div class="alert alert-success" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                } else {
+                                    echo '<div class="alert alert-danger" role="alert">
+                    ' . $_SESSION['add-status']['message'] . '
+                  </div>';
+                                }
+                                unset($_SESSION['add-status']);
+                            }
+                            ?>
                             <!-- content -->
                             <div class="row">
                                 <div class="col-12">
@@ -110,7 +134,7 @@ if (isset($_GET['action'])) {
                                                             </td>
                                                             <td>
                                                                 <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>
-                                                                <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id']; ?>">xóa</a>
+                                                                <a class="btn btn-danger" onclick="alert('bạn chắc chắn muốn xóa')" href="?action=delete&id=<?php echo $row['id']; ?>">xóa</a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>

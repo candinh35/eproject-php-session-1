@@ -13,16 +13,20 @@ if (isset($_POST['email'])) {
     $address = $_POST['address'];
     $password = md5($_POST['password']);
     $password1 = md5($_POST['password1']);
-    if ($password != $password1) {
-        $failed = "mật khẩu không trùng nhau vui lòng nhập lại";
-    } else {
-        $result = $userDAL->signup($email);
-        if (mysqli_num_rows($result) <= 0) {
-            $userDAL->add($email, $password, $phone, $address);
-            $success = "đăng ký tài khoản thành công vui lòng quay lại đăng nhập";
+    if ($email != null || $phone != null || $address != null) {
+        if ($password != $password1) {
+            $failed = "mật khẩu không trùng nhau vui lòng nhập lại";
         } else {
-            $failed = "Email đã được đăng ký";
+            $result = $userDAL->signup($email);
+            if (mysqli_num_rows($result) <= 0) {
+                $userDAL->add($email, $password, $phone, $address);
+                $success = "đăng ký tài khoản thành công vui lòng quay lại đăng nhập";
+            } else {
+                $failed = "Email đã được đăng ký";
+            }
         }
+    }else{
+        $failed = "Vui lòng nhập các mục quan trọng";
     }
 }
 
@@ -47,12 +51,12 @@ $r = mysqli_fetch_assoc($logoList);
 <html lang="en">
 
 <head>
-<?php require_once "path/head.php" ?>
+    <?php require_once "path/head.php" ?>
 </head>
 
 <body>
     <header class="header ">
-    <?php require_once "path/header.php" ?>
+        <?php require_once "path/header.php" ?>
     </header>
     <!-- content -->
     <div>
@@ -94,7 +98,7 @@ $r = mysqli_fetch_assoc($logoList);
     </div>
     <!-- FOOTER -->
     <footer class="footer">
-    <?php require_once "path/footer.php" ?>
+        <?php require_once "path/footer.php" ?>
 
     </footer>
 

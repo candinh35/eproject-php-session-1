@@ -33,7 +33,7 @@ class userDAL extends DB
     function add($email, $password,$phone, $address)
     {
         $sql = "INSERT INTO users (email,password,phone,address) value ('$email', '$password','$phone', '$address') ";
-        mysqli_query($this->connect, $sql);
+        return mysqli_query($this->connect, $sql);
     }
 
     function edit($id, $email, $password)

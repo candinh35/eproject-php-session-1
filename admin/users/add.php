@@ -15,13 +15,34 @@ if (isset($_POST['email'])) {
   $password = md5($_POST['password']);
   $phone = $_POST['phone'];
   $address = $_POST['address'];
-  if ($email == null || $password == null || $phone == null || $address ==  null ) {
+
+  if ($email == null || $password == null || $phone == null || $address ==  null) {
     $_SESSION['add-status'] = [
       'success' => 0,
       'message' => 'Bạn vui lòng nhập tất cả các mục',
     ];
   } else {
-    $userDAL->add($email, $password, $phone, $address);
+    $result = $userDAL->signup($email);
+    if (mysqli_num_rows($result) <= 0) {
+      $checked = $userDAL->add($email, $password, $phone, $address);
+      if ($checked) {
+        //flash session
+        $_SESSION['add-status'] = [
+          'success' => 1,
+          'message' => 'add successfully'
+        ];
+      } else {
+        $_SESSION['add-status'] = [
+          'success' => 0,
+          'message' => 'add failed'
+        ];
+      }
+    } else {
+      $_SESSION['add-status'] = [
+        'success' => 0,
+        'message' => 'Tài khoản đã tồn tại',
+      ];
+    }
   }
 }
 ?>

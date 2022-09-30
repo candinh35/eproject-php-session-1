@@ -91,6 +91,8 @@ if (isset($_GET['action'])) {
                                                         <th> tax</th>
                                                         <th> total</th>
                                                         <th> user_name</th>
+                                                        <th> phone</th>
+                                                        <th> address</th>
                                                     </tr>
                                                 </thead>
                                                 <?php
@@ -120,8 +122,20 @@ if (isset($_GET['action'])) {
                                                                 <?php echo $row['users_name']; ?>
                                                             </td>
                                                             <td>
+                                                                <?php echo $row['phone']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['address']; ?>
+                                                            </td>
+                                                            <td>
                                                                 <a href="edit.php?id=<?php echo $row['order_id']; ?>" class="btn btn-primary">sửa</a>
-                                                                <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['order_id']; ?>">xóa</a>
+                                                            </td>
+                                                             <td>
+                                                                 <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['order_id']; ?>">xóa</a>
+
+                                                             </td>
+                                                             <td>
+                                                                <a class="btn btn-success" href="list-detail.php?id=<?php echo $row['order_id']; ?>">List</a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>

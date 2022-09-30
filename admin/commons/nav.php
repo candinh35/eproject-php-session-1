@@ -168,25 +168,7 @@ $path = "http://localhost/eProject_php/admin/users/login.php";
                                     </a>
                                 </li>
                                
-                                <li class="nav-item">
-                                <li class="nav-item">
-                            <a href="#" class="nav-link">
-                            <i class="fa-solid fa-list"></i>
-                                <p class="ml-3">
-                                    order_detail
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./../order/list-detail.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>List</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                                </li>
+                                
                             </ul>
                         </li>
                         <li class="nav-item">

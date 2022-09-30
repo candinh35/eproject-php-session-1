@@ -6,12 +6,12 @@ $userDAL = new categoryDAL();
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
     $position = $_POST['position'];
-    if($name == null){
+    if ($name == null) {
         $_SESSION['add-status'] = [
             'success' => 0,
             'message' => 'Bạn vui lòng nhập name',
         ];
-    }else{
+    } else {
         $userDAL->add($name, $position);
     }
 }
@@ -28,21 +28,16 @@ if (isset($_POST['name'])) {
 
         <?php require_once $dir . 'admin/commons/nav.php' ?>
         <div class="row">
-            <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
-                <!-- Custom tabs (Charts with tabs)-->
                 <div class="card content1">
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i> Category
                         </h3>
-
                     </div>
-                    <!-- /.card-header -->
-
                     <div class="card-body">
                         <div class="tab-content p-0">
-                        <?php
+                            <?php
                             if (isset($_SESSION['add-status'])) {
                                 if ($_SESSION['add-status']['success'] == 1) {
                                     echo '<div class="alert alert-success" role="alert">
@@ -59,7 +54,7 @@ if (isset($_POST['name'])) {
                             <!-- content -->
                             <div class="card card-info">
                                 <div class="card-header">
-                                    <h3 class="card-title">Input Addon</h3>
+                                    <h3 class="card-title">Add Category</h3>
                                 </div>
                                 <div class="card-body">
                                     <form action="" method="post">
@@ -73,25 +68,14 @@ if (isset($_POST['name'])) {
                                         </div>
                                         <button class="btn btn-info">add</button>
                                     </form>
-                                    <!-- /input-group -->
                                 </div>
-                                <!-- /.card-body -->
                             </div>
-
                         </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </section>
-
-
-
-
         </div>
-
     </div>
-    <!-- /.content-wrapper -->
     <?php require_once $dir . 'admin/commons/footer.php' ?>
 </body>
 

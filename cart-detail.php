@@ -50,24 +50,28 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
         <?php if (isset($Order) && mysqli_num_rows($Order) > 0) { ?>
             <table cellpadding=29 class="w-full">
-                <?php   $count = 1;
+                <?php $count = 1;
                 foreach ($Order as $IdOrder) :
-                    $detail = $order_detail->getByOrderId($IdOrder['id']);
-                    foreach ($detail as $row) : ?>
-                        <thead>
-                            <tr>
-                                <td colspan="4"><h3 class="text-2xl ">đơn hàng: <?php echo $count; $count++; ?> </h3></td>
-                            </tr>
-                            <tr class="border-b-2">
-                                <th>ảnh</th>
-                                <th>tên sản phẩm </th>
-                                <th>giá</th>
-                                <th>số lượng</th>
-                                <th>tổng giá</th>
-                                <th>trạng thái </th>
-                            </tr>
+                    $detail = $order_detail->getByOrderId($IdOrder['id']); ?>
+                    <thead>
+                        <tr>
+                            <td colspan="4">
+                                <h3 class="text-2xl ">đơn hàng: <?php echo $count;
+                                                                $count++; ?> </h3>
+                            </td>
+                        </tr>
+                        <tr class="border-b-2">
+                            <th>ảnh</th>
+                            <th>tên sản phẩm </th>
+                            <th>giá</th>
+                            <th>số lượng</th>
+                            <th>tổng giá</th>
+                            <th>trạng thái </th>
+                        </tr>
 
-                        </thead>
+                    </thead>
+                    <?php foreach ($detail as $row) : ?>
+
                         <tbody>
                             <tr class="text-center">
                                 <td><img src="<?php echo $row['image'] ?>" alt="" width="100"> </td>

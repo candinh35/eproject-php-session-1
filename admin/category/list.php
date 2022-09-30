@@ -60,7 +60,7 @@ if (isset($_GET['action'])) {
                             <!-- content -->
                             <div class="card card-info">
                                 <div class="card-header">
-                                    <h3 class="card-title">Input Addon</h3>
+                                    <h3 class="card-title">Table Category</h3>
                                 </div>
                                 <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover w-full mb-3">

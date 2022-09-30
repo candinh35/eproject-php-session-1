@@ -2,10 +2,11 @@
 session_start();
 $dir = str_replace("admin\order", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/orders 
 require_once $dir . 'dals/orderDetailDAL.php';
+require_once $dir . "config.php";
 require_once $dir . "Utils.php";
 
 $orderDetail = new orderDetailDAL();
-$resultNum = $orderDetail->getList();
+
 
 // kiểm tra đăng nhập
 
@@ -13,26 +14,11 @@ if (!isset($_SESSION['loginAdmin'])) {
     header('location:login.php');
 }
 
-
-// trả về số sản phẩm có trong giỏ hàng
-$number = mysqli_num_rows($resultNum);
-
-//  hàm ceil là làm trò lên 
-$sotrang = ceil($number / 10);
-if (isset($_POST['name']) && $_POST['name'] != null) {
-    $name = $_POST['name'];
-    // hàm tìm sản phẩm trong column name
-    $result = $orderDAL->getSearch($name);
-} else {
-    if (isset($_GET['id']) && $_GET['id'] !== null) {
-        $id = $_GET['id'];
-        // truyên id sang để lấy vè số bản ghi tương ứng
-        $result = $orderDetail->paging($id);
-    } else {
-        $id = 1;
-        $result = $orderDetail->paging($id);
-    }
+if(!isset($_GET['id']) && !is_numeric($_GET['id'])){
+    header('location:list.php');
 }
+$id = $_GET['id'];
+$resultNum = $orderDetail->getByOrderId($id);
 
 
 if (isset($_GET['action'])) {
@@ -81,10 +67,11 @@ if (isset($_GET['action'])) {
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
-                                            <table id="example2" class="table table-bordered table-hover w-full">
+                                            <table id="example2" class="table table-bordered table-hover w-full text-center">
                                                 <thead>
                                                     <tr>
                                                         <th> id</th>
+                                                        <th> image</th>
                                                         <th>product name</th>
                                                         <th> order_id</th>
                                                         <th> price</th>
@@ -99,6 +86,10 @@ if (isset($_GET['action'])) {
                                                         <tr>
                                                             <td>
                                                                 <?php echo $row['order_detail_id']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <img src="<?php echo BASE_URL . $row['image']; ?>" alt="" width="100">
+                                                                
                                                             </td>
                                                             <td>
                                                                 <?php echo $row['product_name']; ?>
@@ -124,20 +115,7 @@ if (isset($_GET['action'])) {
                                         </div>
                                         <!-- /.card-body -->
                                     </div>
-                                    <?php
-                                    $i = 1;
-                                    while ($i <= $sotrang) { ?>
-                                        <div style="width: 100px; list-style:none; display:inline-block">
-                                            <li class="page-item <?php if (!$id) {
-                                                                        $id = 1;
-                                                                    }
-                                                                    echo ($id == $i) ? 'active' : ''; ?>"><a style="text-align: center;" class="page-link" href="<?php $dir . 'admin/product/list.php' ?>?id=<?php echo $i ?>"><?php echo $i ?></a></li>
-                                        </div>
-
-                                    <?php
-                                        $i++;
-                                    }
-                                    ?>
+                                   
                                 </div>
                             </div>
                         </div>
