@@ -3,7 +3,7 @@ session_start();
 $dir = str_replace("admin\order", "", __DIR__);  // hàm str_replace là hàm tha đổi giá trị đoạn chuỗi, mhư ở đây cắt phần admin/orders 
 require_once $dir . 'dals/orderDAL.php';
 require_once $dir . 'dals/orderDetailDAL.php';
-require_once $dir. "Utils.php";
+require_once $dir . "Utils.php";
 
 
 
@@ -35,14 +35,7 @@ if (isset($_POST['name']) && $_POST['name'] != null) {
         $result = $orderDAL->paging($id);
     }
 }
-if (isset($_GET['action'])) {
-    if (is_numeric($_GET['id']) && $_GET['action'] == 'delete') {
-        $id = $_GET['id'];
-        $orderDAL->deleteOne($id);
-        $orderDetail->deleteOrderDetail($id);
-        header('location:list.php');
-    }
-}
+
 
 
 ?>
@@ -107,10 +100,25 @@ if (isset($_GET['action'])) {
                                                                 <?php echo $row['date_created']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $row['status']; ?>
+                                                                <?php
+                                                                switch ($row['status']) {
+                                                                    case 1:
+                                                                        echo "Chờ phản hồi";
+                                                                        break;
+                                                                    case 2:
+                                                                        echo "Đang sử lý";
+                                                                        break;
+                                                                    case 3:
+                                                                        echo "Hủy đơn";
+                                                                        break;
+                                                                    case 4:
+                                                                        echo "Hoàn thành";
+                                                                        break;
+                                                                };
+                                                                ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo Utils::formatMoney($row['sub_total']) ; ?>
+                                                                <?php echo Utils::formatMoney($row['sub_total']); ?>
                                                             </td>
                                                             <td>
                                                                 <?php echo $row['tax']; ?>
@@ -130,11 +138,7 @@ if (isset($_GET['action'])) {
                                                             <td>
                                                                 <a href="edit.php?id=<?php echo $row['order_id']; ?>" class="btn btn-primary">sửa</a>
                                                             </td>
-                                                             <td>
-                                                                 <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['order_id']; ?>">xóa</a>
-
-                                                             </td>
-                                                             <td>
+                                                            <td>
                                                                 <a class="btn btn-success" href="list-detail.php?id=<?php echo $row['order_id']; ?>">List</a>
                                                             </td>
                                                         </tr>
@@ -159,6 +163,15 @@ if (isset($_GET['action'])) {
                                         $i++;
                                     }
                                     ?>
+                                    <div class="table table-bordered table-hover w-full mt-3">
+                                        <ul>
+                                            <li style="font-size:20px ;">Status :</li>
+                                            <li>1 là khách vừa đặt đươn hàng</li>
+                                            <li>2 là đang vận chuyển</li>
+                                            <li>3 là hủy đơn</li>
+                                            <li>4 là hoàn thành</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

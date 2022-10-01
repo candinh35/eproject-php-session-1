@@ -134,7 +134,7 @@ if (isset($_GET['action'])) {
                                                             </td>
                                                             <td>
                                                                 <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">sửa</a>
-                                                                <a class="btn btn-danger" onclick="alert('bạn chắc chắn muốn xóa')" href="?action=delete&id=<?php echo $row['id']; ?>">xóa</a>
+                                                                <a class="btn btn-danger" onclick="confirm('bạn chắc chắn muốn xóa')" href="?action=delete&id=<?php echo $row['id']; ?>">xóa</a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>

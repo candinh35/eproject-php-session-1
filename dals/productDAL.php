@@ -74,7 +74,12 @@ class productDAL extends DB
         return $result;
     }
     function searchIndex($search){
-        $sql = "SELECT * FROM products WHERE name LIKE '$search%'";
+        $sql = "SELECT * FROM products WHERE name LIKE '%$search%'";
+        $result = mysqli_query($this->connect, $sql);
+        return $result;
+    }
+    function checkCate($category_id){
+        $sql = "SELECT * FROM products WHERE category_id = $category_id";
         $result = mysqli_query($this->connect, $sql);
         return $result;
     }

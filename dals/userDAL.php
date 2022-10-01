@@ -35,10 +35,15 @@ class userDAL extends DB
         $sql = "INSERT INTO users (email,password,phone,address) value ('$email', '$password','$phone', '$address') ";
         return mysqli_query($this->connect, $sql);
     }
-
-    function edit($id, $email, $password)
+    function edit($id,$email, $password ,$phone ,$address)
     {
-        $sql = "UPDATE `users` SET `email`='$email',`password`='$password' WHERE id=$id";
+        $sql = "UPDATE `users` SET `email`='$email', `password`='$password',`phone`='$phone' ,`address`='$address' WHERE id=$id";
+        mysqli_query($this->connect, $sql);
+    }
+
+    function editUser($id, $password ,$phone ,$address)
+    {
+        $sql = "UPDATE `users` SET `password`='$password',`phone`='$phone',`address`='$address' WHERE id=$id";
         mysqli_query($this->connect, $sql);
     }
     function login($email, $password)

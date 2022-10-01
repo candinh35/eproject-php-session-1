@@ -21,12 +21,15 @@ $logoDAL = new logoDAL();
 $logoList = $logoDAL->getList();
 $r = mysqli_fetch_assoc($logoList);
 
-if (isset($_POST['delete'])) {
-    if (is_numeric($_POST['delete'])) {
-        $id = $_POST['delete'];
-        $orderDAL->deleteOne($id);
-        $order_detail->deleteOrderDetail($id);
-        header('location:cart-detail.php');
+if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+    if ($status == 1) {
+        $checked = $orderDAL->edit($id,'3');
+        $_SESSION['add-status'] = [
+            'message' => 'Bạn đã hủy đơn hàng'
+        ];
     }
 }
 // kiểm tra đăng xuất
@@ -48,19 +51,25 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
     </header>
     <!-- content -->
     <div class="container lg:w-11/12 w-full  lg:mx-auto mx-0 mt-14">
+        <?php
+         if (isset($_SESSION['add-status'])) {
+                echo '<div class="text-2xl text-red-500" role="alert">'. $_SESSION['add-status']['message'] . '</div>';
+                unset($_SESSION['add-status']);
+            }
+        ?>
         <?php if (isset($Order) && mysqli_num_rows($Order) > 0) { ?>
-            <table cellpadding=29 class="w-full">
+            <table cellpadding=29 class="table table-bordered container m-auto">
                 <?php $count = 1;
                 foreach ($Order as $IdOrder) :
                     $detail = $order_detail->getByOrderId($IdOrder['id']); ?>
                     <thead>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="6">
                                 <h3 class="text-2xl ">đơn hàng: <?php echo $count;
                                                                 $count++; ?> </h3>
                             </td>
                         </tr>
-                        <tr class="border-b-2">
+                        <tr class="border-2 bg-amber-400">
                             <th>ảnh</th>
                             <th>tên sản phẩm </th>
                             <th>giá</th>
@@ -72,8 +81,8 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                     </thead>
                     <?php foreach ($detail as $row) : ?>
 
-                        <tbody>
-                            <tr class="text-center">
+                        <tbody >
+                            <tr class="text-center border-x-2 -px-3">
                                 <td><img src="<?php echo $row['image'] ?>" alt="" width="100"> </td>
                                 <td><?php echo $row['product_name'] ?></td>
                                 <td><?php echo Utils::formatMoney($row['price']) ?></td>
@@ -82,13 +91,13 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                                 <td><?php
                                     switch ($IdOrder['status']) {
                                         case 1:
-                                            echo "Chờ";
+                                            echo "Chờ phản hồi";
                                             break;
                                         case 2:
                                             echo "Đang sử lý";
                                             break;
                                         case 3:
-                                            echo "Hủy";
+                                            echo "Hủy đơn";
                                             break;
                                         case 4:
                                             echo "Hoàn thành";
@@ -98,7 +107,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                             </tr>
                         <?php
                     endforeach; ?>
-                        <tr class="border-y-2">
+                        <tr class="border-2 bg-zinc-200 ">
                             <td colspan="2" class="text-xl ">tổng đơn hàng </td>
                             <td colspan="2">
                                 <strong>
@@ -107,10 +116,13 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                             </td>
                             <td></td>
                             <td colspan="3">
+                                <?php if($IdOrder['status'] ==1){ ?>
                                 <form action="" method="post">
-                                    <input class="hidden" type="text" name="delete" value="<?php echo $IdOrder['id'] ?>">
+                                    <input class="hidden" type="text" name="id" value="<?php echo $IdOrder['id'] ?>">
+                                    <input class="hidden" type="text" name="status" value="<?php echo $IdOrder['status'] ?>">
                                     <button class="bg-gray-800 lg:px-10 px-4 py-2 text-white uppercase cursor-pointer block">Hủy Đơn</button>
                                 </form>
+                                <?php } ?>
                             </td>
                         </tr>
                         <tr>
@@ -121,13 +133,13 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                     <?php endforeach; ?>
 
                     <tr class="border-t-2">
-                        <td colspan="2">địa chỉ </td>
+                        <td class="text-2xl font-medium" colspan="2">địa chỉ </td>
                         <td colspan="2">
                             <?php echo $address['address'] ?>
                         </td>
                     </tr>
                     <tr class="border-b-2">
-                        <td colspan="2">số điện thoại </td>
+                        <td class="text-2xl font-medium" colspan="2">số điện thoại </td>
                         <td colspan="2">
                             <?php echo $address['phone'] ?>
                         </td>

@@ -45,23 +45,19 @@ if (isset($_POST['search'])) {
                     <i class="absolute right-3 top-2.5 fa-solid fa-magnifying-glass"></i>
                 </button>
                 <?php
-                $dem = 1;
                 if (isset($resultSearch)) {  ?>
-                    <div class="product_search ">
+                    <div class="product_search" style="overflow-y:scroll ;height:60vh">
                         <?php
                         if (mysqli_num_rows($resultSearch) > 0) {
                             foreach ($resultSearch as $result1) :
-                                if ($dem > 4) {
-                                    break;
-                                }
-                                $dem++;
+                               
                         ?>
                                 <div class="flex gap-2 mb-3 border-b-2">
                                     <a href="detail.php?id=<?php echo $result1['id']; ?>">
                                         <img src="<?php echo $result1['image'] ?>" alt="" width="100">
                                     </a>
 
-                                    <div>
+                                    <div style="max-width:200px;">
                                         <h4><a class="hover:text-amber-600 leading-10" href="detail.php?id=<?php echo $result1['id']; ?>"><?php echo $result1['name'] ?></a></h4>
                                         <div class="flex gap-2 font-extrabold">
 
@@ -92,8 +88,12 @@ if (isset($_POST['search'])) {
                                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                     <span class="dropdown-item dropdown-header" style="margin-left: 64px;">Lựa Chọn</span>
                                     <div class="dropdown-divider"></div>
+                                    <a href="editUser.php" class="hover:text-amber-600" style="display:block;margin:10px 0">
+                                        <i class="fa-solid fa-gear mr-3"></i>Chỉnh sửa thông tin
+                                    </a>
+                                    <div class="dropdown-divider"></div>
                                     <a href="cart-detail.php" class="hover:text-amber-600" style="display:block;margin:10px 0">
-                                        <i class="fa-solid fa-gear mr-3"></i>quản lí giỏ hàng
+                                    <i class="fa-solid fa-bag-shopping mr-3"></i>quản lí giỏ hàng
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a href="?logout=1" class="hover:text-amber-600">

@@ -89,8 +89,13 @@ if (isset($_POST['status'])) {
                                                     <label for="" class="">status</label>
                                                 </div>
                                                 <div class="input-group mb-3">
-
-                                                    <input type="name" value="<?php echo $row['status'] ?>" name="status" class="form-control">
+                                                <select name="status" id="" class="text-center">
+                                                    <option value="1">chờ</option>
+                                                    <option value="2">đang giao</option>
+                                                    <option value="3">hủy</option>
+                                                    <option value="4">hoàn thành</option>
+                                                </select>
+                                                    <!-- <input type="name" value="<?php // echo $row['status'] ?>" name="status" class="form-control"> -->
                                                 </div>
                                                 <button class="btn btn-info btn-flat">edit</button>
                                             </form>
