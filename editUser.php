@@ -67,37 +67,37 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                 ?>
         <div class="w-7/12 border-2 mx-auto form-horizontal">
             <form class="form-horizontal1" method="post">
-                <div class="card-body">
+                <div class="card-body1">
                     <div class="form-group1 row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-101">
                             <?php echo $row['email'] ?>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group1 row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword3" value="<?php echo $row['password'] ?>" name="password">
+                        <div class="col-sm-101">
+                            <input type="password" class="form-control1" id="inputPassword3" value="<?php echo $row['password'] ?>" name="password">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group1 row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">phone</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" value="<?php echo $row['phone'] ?>" name="phone">
+                        <div class="col-sm-101">
+                            <input type="text" class="form-control1" id="" value="<?php echo $row['phone'] ?>" name="phone">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group1 row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">address</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" value="<?php echo $row['address'] ?>" name="address">
+                        <div class="col-sm-101">
+                            <input type="text" class="form-control1" id="" value="<?php echo $row['address'] ?>" name="address">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group1 row">
                         <div class="offset-sm-2 col-sm-10">
 
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer1">
                         <button  class="btn btn-info">Chỉnh sửa</button>
     
                     </div>
